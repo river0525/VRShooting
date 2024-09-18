@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PlayerAttack
   - EnemyAttack
+  - CannotTouch
   layers:
   - Default
   - TransparentFX
