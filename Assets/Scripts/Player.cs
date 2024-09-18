@@ -9,9 +9,13 @@ public class Player : MonoBehaviour
     [SerializeField] float jumpSpeed = 1;
     [SerializeField] float maxJumpHeight = 10;
     [SerializeField] float gravity = 1;
+    [SerializeField] float headRayDistance = 1;
+    [SerializeField] float headRayRadius = 1;
+    [SerializeField] Transform headRayPos;
 
     [Header("èeÇÃê›íË")]
     [SerializeField] float bulletInterval;
+    [SerializeField] float maxRayDistance = 100;
     [SerializeField] GameObject bullet;
     [SerializeField] Transform muzzle;
 
@@ -54,7 +58,14 @@ public class Player : MonoBehaviour
         bulletIntervalCount += Time.deltaTime;
         if(Input.GetButton("Shot") && bulletIntervalCount >= bulletInterval)
         {
-            Instantiate(bullet, muzzle.position, muzzle.rotation);
+            int centerX = Screen.width / 2;
+            int centerY = Screen.height / 2;
+            Vector3 origin = Camera.main.ScreenToWorldPoint(new Vector3(centerX, centerY, 1.5f));//1.5fÇÕèeå˚ÇÃí∑Ç≥
+            if (Physics.Raycast(origin, Camera.main.transform.rotation * Vector3.forward, out RaycastHit hit, maxRayDistance)) muzzle.transform.LookAt(hit.point);
+            else muzzle.transform.LookAt(Camera.main.transform.rotation * (Camera.main.transform.position + Vector3.forward * maxRayDistance));
+            GameObject b = Instantiate(bullet, muzzle.position, muzzle.rotation);
+            Bullet bulletScript = b.GetComponent<Bullet>();
+            bulletScript.maxMoveDistance = maxRayDistance;
             bulletIntervalCount = 0;
         }
     }
