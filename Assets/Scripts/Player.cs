@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] float gravity = 1;
     [SerializeField] float headRayDistance = 1;
     [SerializeField] float headRayRadius = 1;
-    [SerializeField] Transform headRayPos;
+    [SerializeField] Transform headRayOrigin;
 
     [Header("e‚ÌÝ’è")]
     [SerializeField] float bulletInterval;
@@ -22,7 +22,9 @@ public class Player : MonoBehaviour
     private float startJumpHeight;
     private float bulletIntervalCount = 0;
     private bool isJump = false;
+    private bool isHit = false;
     private CharacterController characterController;
+    private RaycastHit hit;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,11 +45,13 @@ public class Player : MonoBehaviour
             isJump = true;
             startJumpHeight = transform.position.y;
         }
-        if(isJump)
+        isHit = Physics.SphereCast(headRayOrigin.position, headRayRadius, Vector3.up, out hit, headRayDistance);
+        if (isJump)
         {
-            if (transform.position.y - startJumpHeight > maxJumpHeight) isJump = false;
+            if (transform.position.y - startJumpHeight > maxJumpHeight || isHit) isJump = false;
             else y = jumpSpeed;
         }
+        Debug.Log(isJump);
         var horizontalRotation = Quaternion.AngleAxis(Camera.main.transform.eulerAngles.y, Vector3.up);
         var moveVec = horizontalRotation * new Vector3(x, 0, z) * walkSpeed;
         var jumpVec = Vector3.up * y;
@@ -67,6 +71,19 @@ public class Player : MonoBehaviour
             Bullet bulletScript = b.GetComponent<Bullet>();
             bulletScript.maxMoveDistance = maxRayDistance;
             bulletIntervalCount = 0;
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (isHit)
+        {
+            Gizmos.DrawRay(headRayOrigin.position, Vector3.up * hit.distance);
+            Gizmos.DrawWireSphere(headRayOrigin.position + Vector3.up * (hit.distance), headRayRadius);
+        }
+        else
+        {
+            Gizmos.DrawRay(headRayOrigin.position, Vector3.up * 100);
         }
     }
 
