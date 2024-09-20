@@ -529,9 +529,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 4
-  jumpSpeed: 4
+  runSpeed: 8
+  jumpSpeed: 6
   maxJumpHeight: 2
-  gravity: 3
+  gravity: 6
   headRayDistance: 0.1
   headRayRadius: 0.5
   headRayOrigin: {fileID: 2544959952332488724}
@@ -727,7 +728,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6444615982544171148}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     [Header("à⁄ìÆÇÃê›íË")]
     [SerializeField] float walkSpeed = 1;
+    [SerializeField] float runSpeed = 2;
     [SerializeField] float jumpSpeed = 1;
     [SerializeField] float maxJumpHeight = 10;
     [SerializeField] float gravity = 1;
@@ -53,7 +54,8 @@ public class Player : MonoBehaviour
         }
         Debug.Log(isJump);
         var horizontalRotation = Quaternion.AngleAxis(Camera.main.transform.eulerAngles.y, Vector3.up);
-        var moveVec = horizontalRotation * new Vector3(x, 0, z) * walkSpeed;
+        var moveVec = (horizontalRotation * new Vector3(x, 0, z)).normalized;
+        moveVec *= Input.GetButton("Run") ? runSpeed : walkSpeed;
         var jumpVec = Vector3.up * y;
 
         characterController.Move((moveVec + jumpVec) * Time.deltaTime);
