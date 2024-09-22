@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
         else navMeshAgent.destination = transform.position;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void CustomizedOnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "PlayerAttack") Destroy(gameObject);
     }
