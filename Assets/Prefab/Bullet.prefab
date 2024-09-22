@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 703520547667fc949a12b7615ff02029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
+  speed: 30
   ignoreTag:
   - CannotTouch
   maxMoveDistance: 20
