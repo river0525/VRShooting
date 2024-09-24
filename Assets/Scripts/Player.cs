@@ -91,6 +91,6 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "EnemyAttack") Debug.Log("GameOver");
+        if (other.gameObject.tag == "EnemyAttack") Debug.Log(GManager.instance.playerHP);
     }
 }

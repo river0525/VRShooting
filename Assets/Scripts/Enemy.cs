@@ -5,24 +5,84 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private Transform player;
+    [SerializeField] private int HP = 3;
+    [SerializeField] private float attackInterval = 1f;
+    [SerializeField] private float randomMoveInterval = 5f;
+    [SerializeField] private float randomMoveBreakTime = 1f;
     [SerializeField] private TrackingArea trackingArea;
+    [SerializeField] private Animator animator;
+
+    private float attackTimer = 0f;
+    private float randomMoveTimer = 0f;
+    private float LockOffDistance = 20f;
+    private bool isLockOn = false;
+    private Vector3 centralPos;
     private NavMeshAgent navMeshAgent;
     // Start is called before the first frame update
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        centralPos = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (trackingArea.inThisArea) navMeshAgent.SetDestination(player.position);
-        else navMeshAgent.destination = transform.position;
+        attackTimer += Time.deltaTime;
+        randomMoveTimer += Time.deltaTime;
+        var dis = Vector3.Distance(GManager.instance.playerTransform.position, transform.position);
+        if (dis >= LockOffDistance) isLockOn = false;
+        if (trackingArea.inThisArea) isLockOn = true;
+        if(isLockOn)
+        {
+            navMeshAgent.SetDestination(GManager.instance.playerTransform.position);
+            if (dis < navMeshAgent.stoppingDistance)
+            {
+                if (attackTimer >= attackInterval)
+                {
+                    attackTimer = 0f;
+                    animator.SetTrigger("isAttack");
+                }
+                else
+                {
+                    var direction = GManager.instance.playerTransform.position - transform.position;
+                    direction.y = 0;
+
+                    var lookRotation = Quaternion.LookRotation(direction, Vector3.up);
+                    var newRotation = Quaternion.Lerp(transform.rotation, lookRotation, 0.1f);
+                    if(newRotation==transform.rotation) animator.SetBool("isMove", false);
+                    else
+                    {
+                        animator.SetBool("isMove", true);
+                        transform.rotation = newRotation;
+                    }
+                }
+            }
+            else animator.SetBool("isMove", true);
+        }
+        else
+        {
+            if(randomMoveTimer >= randomMoveInterval)
+            {
+                if (randomMoveTimer >= randomMoveInterval + randomMoveBreakTime)
+                {
+                    randomMoveTimer = 0f;
+                    navMeshAgent.destination = transform.position;
+                }
+                
+            }
+            navMeshAgent.destination = transform.position;
+        }
+        
     }
 
     public void CustomizedOnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "PlayerAttack") Destroy(gameObject);
+        if (other.gameObject.tag == "PlayerAttack")
+        {
+            --HP;
+            isLockOn = true;
+            if (HP <= 0) animator.SetBool("isDead", true);
+        }
     }
 }
