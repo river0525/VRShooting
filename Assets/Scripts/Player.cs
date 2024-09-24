@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     [Header("ˆÚ“®‚ÌÝ’è")]
     [SerializeField] float walkSpeed = 1;
     [SerializeField] float runSpeed = 2;
+    [SerializeField] float runSP = 1f;
+    [SerializeField] float recoverSP = 2f;
     [SerializeField] float jumpSpeed = 1;
     [SerializeField] float maxJumpHeight = 10;
     [SerializeField] float gravity = 1;
@@ -55,7 +57,16 @@ public class Player : MonoBehaviour
         Debug.Log(isJump);
         var horizontalRotation = Quaternion.AngleAxis(Camera.main.transform.eulerAngles.y, Vector3.up);
         var moveVec = (horizontalRotation * new Vector3(x, 0, z)).normalized;
-        moveVec *= Input.GetButton("Run") ? runSpeed : walkSpeed;
+        if (Input.GetButton("Run") && GManager.instance.PlayerSP > 0)
+        {
+            moveVec *= runSpeed;
+            if (moveVec != Vector3.zero) GManager.instance.PlayerSP -= runSP * Time.deltaTime;
+        }
+        else
+        {
+            moveVec *= walkSpeed;
+            GManager.instance.PlayerSP += recoverSP * Time.deltaTime;
+        }
         var jumpVec = Vector3.up * y;
 
         characterController.Move((moveVec + jumpVec) * Time.deltaTime);
@@ -91,6 +102,6 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "EnemyAttack") Debug.Log(GManager.instance.playerHP);
+        if (other.gameObject.tag == "EnemyAttack") Debug.Log(GManager.instance.PlayerHP);
     }
 }
