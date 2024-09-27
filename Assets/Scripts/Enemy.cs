@@ -16,13 +16,11 @@ public class Enemy : MonoBehaviour
     private float randomMoveTimer = 0f;
     private float LockOffDistance = 20f;
     private bool isLockOn = false;
-    private Vector3 centralPos;
     private NavMeshAgent navMeshAgent;
     // Start is called before the first frame update
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-        centralPos = transform.position;
     }
 
     // Update is called once per frame
@@ -30,12 +28,13 @@ public class Enemy : MonoBehaviour
     {
         attackTimer += Time.deltaTime;
         randomMoveTimer += Time.deltaTime;
-        var dis = Vector3.Distance(GManager.instance.playerTransform.position, transform.position);
+        var playerPos = Player.GetPosition();
+        var dis = Vector3.Distance(playerPos, transform.position);
         if (dis >= LockOffDistance) isLockOn = false;
         if (trackingArea.inThisArea) isLockOn = true;
         if(isLockOn)
         {
-            navMeshAgent.SetDestination(GManager.instance.playerTransform.position);
+            navMeshAgent.SetDestination(playerPos);
             if (dis < navMeshAgent.stoppingDistance)
             {
                 if (attackTimer >= attackInterval)
@@ -45,7 +44,7 @@ public class Enemy : MonoBehaviour
                 }
                 else
                 {
-                    var direction = GManager.instance.playerTransform.position - transform.position;
+                    var direction = playerPos - transform.position;
                     direction.y = 0;
 
                     var lookRotation = Quaternion.LookRotation(direction, Vector3.up);

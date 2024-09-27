@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
- 
+using UnityEngine.SceneManagement;
+
 public class GManager : MonoBehaviour
 {
     public static GManager instance = null;
     public int maxPlayerHP = 5;
     public int maxPlayerSP = 5;
-    public Transform playerTransform;
 
     public int PlayerHP {
         get
@@ -31,17 +31,18 @@ public class GManager : MonoBehaviour
         set
         {
             if (value < 0 && value < playerSP) playerSP = -5;
-            else if (value > maxPlayerHP) playerSP = maxPlayerSP;
+            else if (value > maxPlayerSP) playerSP = maxPlayerSP;
             else playerSP = value;
         }
     }
-
     [SerializeField] float playerDamageInterval = 0.5f;
+    [SerializeField] GameObject gameoverObj;
 
     private int playerHP;
     private float playerSP;
     private int lastEnemyID;
     private float timer = 0f;
+    
 
     private void Awake()
     {
