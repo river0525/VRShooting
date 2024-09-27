@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class FadeImage : MonoBehaviour
 {
     [Header("最初からフェードインが完了しているかどうか")] [SerializeField] bool firstFadeInComp;
-
-    private Image img = null;
-    private int frameCount = 0;
-    private float timer = 0.0f;
-    private bool fadeIn = false;
-    private bool fadeOut = false;
-    private bool compFadeIn = false;
-    private bool compFadeOut = false;
+    private static Image img;
+    private static int frameCount = 0;
+    private static float timer = 0.0f;
+    private static bool fadeIn = false;
+    private static bool fadeOut = false;
+    private static bool compFadeIn = false;
+    private static bool compFadeOut = false;
+    private static bool firstPush = false;
+    private static bool goNextScene = false;
+    private static string changeSceneName;
 
     /// <summary>
     /// フェードインを開始する
@@ -43,7 +46,7 @@ public class FadeImage : MonoBehaviour
     /// <summary>
     /// フェードアウトを開始する
     /// </summary>
-    public void StartFadeOut()
+    private static void StartFadeOut()
     {
         if (fadeIn || fadeOut)
         {
@@ -69,6 +72,15 @@ public class FadeImage : MonoBehaviour
     void Start()
     {
         img = GetComponent<Image>();
+        frameCount = 0;
+        timer = 0.0f;
+        fadeIn = false;
+        fadeOut = false;
+        compFadeIn = false;
+        compFadeOut = false;
+        firstPush = false;
+        goNextScene = false;
+        changeSceneName = "";
         if (firstFadeInComp)
         {
             FadeInComplete();
@@ -94,6 +106,11 @@ public class FadeImage : MonoBehaviour
             }
         }
         ++frameCount;
+        if (!goNextScene && IsFadeOutComplete())
+        {
+            SceneManager.LoadScene(changeSceneName);
+            goNextScene = true;
+        }
     }
 
     //フェードイン中
@@ -146,5 +163,13 @@ public class FadeImage : MonoBehaviour
         timer = 0.0f;
         fadeOut = false;
         compFadeOut = true;
+    }
+
+    public static void LoadScene(string sceneName)
+    {
+        if (firstPush) return;
+        StartFadeOut();
+        firstPush = true;
+        changeSceneName = sceneName;
     }
 }

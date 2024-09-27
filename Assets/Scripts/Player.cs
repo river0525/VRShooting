@@ -28,16 +28,40 @@ public class Player : MonoBehaviour
     private bool isHit = false;
     private CharacterController characterController;
     private RaycastHit hit;
+    private static Transform playerTransform;
+    public static bool canMove = true;
     // Start is called before the first frame update
     void Start()
     {
         characterController = GetComponent<CharacterController>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        playerTransform = transform;
+        canMove = true;
     }
 
     // Update is called once per frame
     void Update()
+    {
+        if (!canMove) return;
+        PlayerMove();
+        Shot();
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (isHit)
+        {
+            Gizmos.DrawRay(headRayOrigin.position, Vector3.up * hit.distance);
+            Gizmos.DrawWireSphere(headRayOrigin.position + Vector3.up * (hit.distance), headRayRadius);
+        }
+        else
+        {
+            Gizmos.DrawRay(headRayOrigin.position, Vector3.up * 100);
+        }
+    }
+
+    private void PlayerMove()
     {
         //ˆÚ“®ˆ—
         var x = Input.GetAxis("Horizontal");
@@ -54,13 +78,12 @@ public class Player : MonoBehaviour
             if (transform.position.y - startJumpHeight > maxJumpHeight || isHit) isJump = false;
             else y = jumpSpeed;
         }
-        Debug.Log(isJump);
         var horizontalRotation = Quaternion.AngleAxis(Camera.main.transform.eulerAngles.y, Vector3.up);
         var moveVec = (horizontalRotation * new Vector3(x, 0, z)).normalized;
-        if (Input.GetButton("Run") && GManager.instance.PlayerSP > 0)
+        if (Input.GetButton("Run") && GManager.instance.PlayerSP > 0 && moveVec != Vector3.zero)
         {
             moveVec *= runSpeed;
-            if (moveVec != Vector3.zero) GManager.instance.PlayerSP -= runSP * Time.deltaTime;
+            GManager.instance.PlayerSP -= runSP * Time.deltaTime;
         }
         else
         {
@@ -70,10 +93,13 @@ public class Player : MonoBehaviour
         var jumpVec = Vector3.up * y;
 
         characterController.Move((moveVec + jumpVec) * Time.deltaTime);
+    }
 
+    private void Shot()
+    {
         //’e‚Ìˆ—
         bulletIntervalCount += Time.deltaTime;
-        if(Input.GetButton("Shot") && bulletIntervalCount >= bulletInterval)
+        if (Input.GetButton("Shot") && bulletIntervalCount >= bulletInterval)
         {
             int centerX = Screen.width / 2;
             int centerY = Screen.height / 2;
@@ -87,21 +113,8 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    public static Vector3 GetPosition()
     {
-        if (isHit)
-        {
-            Gizmos.DrawRay(headRayOrigin.position, Vector3.up * hit.distance);
-            Gizmos.DrawWireSphere(headRayOrigin.position + Vector3.up * (hit.distance), headRayRadius);
-        }
-        else
-        {
-            Gizmos.DrawRay(headRayOrigin.position, Vector3.up * 100);
-        }
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "EnemyAttack") Debug.Log(GManager.instance.PlayerHP);
+        return playerTransform.position;
     }
 }
