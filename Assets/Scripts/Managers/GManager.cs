@@ -36,13 +36,13 @@ public class GManager : MonoBehaviour
         }
     }
     [SerializeField] float playerDamageInterval = 0.5f;
-    [SerializeField] GameObject gameoverObj;
+    [SerializeField] AudioClip playerDamageSE;
 
     private int playerHP;
     private float playerSP;
     private int lastEnemyID;
     private float timer = 0f;
-    
+    private AudioSource audioSource;
 
     private void Awake()
     {
@@ -53,6 +53,7 @@ public class GManager : MonoBehaviour
             lastEnemyID = gameObject.GetInstanceID();//é©ï™ÇÃIDÇ≈èâä˙âª
             playerHP = maxPlayerHP;
             playerSP = maxPlayerSP;
+            audioSource = GetComponent<AudioSource>();
         }
         else
         {
@@ -67,9 +68,15 @@ public class GManager : MonoBehaviour
 
     public void PlayerDamage(int damage, int enemyID)
     {
-        if (enemyID == lastEnemyID && timer < playerDamageInterval) return;
+        if ((enemyID == lastEnemyID && timer < playerDamageInterval) || !Player.canMove) return;
         lastEnemyID = enemyID;
         timer = 0f;
         PlayerHP -= damage;
+        PlaySE(playerDamageSE);
+    }
+
+    public void PlaySE(AudioClip audio)
+    {
+        audioSource.PlayOneShot(audio);
     }
 }

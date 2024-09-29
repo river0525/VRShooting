@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class Entrance : MonoBehaviour
 {
     [SerializeField] string changeSceneName;
+    [SerializeField] AudioClip DoorSE;
     public static bool canEnter = true;
     private void Start()
     {
@@ -17,6 +18,8 @@ public class Entrance : MonoBehaviour
         if (other.gameObject.tag == "Player" && Input.GetButtonDown("ChangeScene") && canEnter)
         {
             FadeImage.LoadScene(changeSceneName);
+            Player.canMove = false;
+            GManager.instance.PlaySE(DoorSE);
         }
     }
 }

@@ -15,19 +15,24 @@ public class Player : MonoBehaviour
     [SerializeField] float headRayDistance = 1;
     [SerializeField] float headRayRadius = 1;
     [SerializeField] Transform headRayOrigin;
+    [SerializeField] AudioClip[] footstepsSE;
 
     [Header("銃の設定")]
     [SerializeField] float bulletInterval;
     [SerializeField] float maxRayDistance = 100;
     [SerializeField] GameObject bullet;
     [SerializeField] Transform muzzle;
+    [SerializeField] AudioClip shotSE;
 
     private float startJumpHeight;
     private float bulletIntervalCount = 0;
+    private float footstepsIntervalCount = 0;
     private bool isJump = false;
     private bool isHit = false;
     private CharacterController characterController;
     private RaycastHit hit;
+    private Vector3 moveVec;
+
     private static Transform playerTransform;
     public static bool canMove = true;
     // Start is called before the first frame update
@@ -63,6 +68,9 @@ public class Player : MonoBehaviour
 
     private void PlayerMove()
     {
+        //タイマー増加
+        footstepsIntervalCount += Time.deltaTime;
+
         //移動処理
         var x = Input.GetAxis("Horizontal");
         var y = -gravity;
@@ -79,16 +87,18 @@ public class Player : MonoBehaviour
             else y = jumpSpeed;
         }
         var horizontalRotation = Quaternion.AngleAxis(Camera.main.transform.eulerAngles.y, Vector3.up);
-        var moveVec = (horizontalRotation * new Vector3(x, 0, z)).normalized;
+        moveVec = (horizontalRotation * new Vector3(x, 0, z)).normalized;
         if (Input.GetButton("Run") && GManager.instance.PlayerSP > 0 && moveVec != Vector3.zero)
         {
             moveVec *= runSpeed;
             GManager.instance.PlayerSP -= runSP * Time.deltaTime;
+            PlayFootstepsSE(0.3f);
         }
         else
         {
             moveVec *= walkSpeed;
             GManager.instance.PlayerSP += recoverSP * Time.deltaTime;
+            PlayFootstepsSE(0.5f);
         }
         var jumpVec = Vector3.up * y;
 
@@ -109,7 +119,18 @@ public class Player : MonoBehaviour
             GameObject b = Instantiate(bullet, muzzle.position, muzzle.rotation);
             Bullet bulletScript = b.GetComponent<Bullet>();
             bulletScript.maxMoveDistance = maxRayDistance;
+            GManager.instance.PlaySE(shotSE);
             bulletIntervalCount = 0;
+        }
+    }
+
+    private void PlayFootstepsSE(float interval)
+    {
+        if (characterController.isGrounded && footstepsIntervalCount >= interval && moveVec != Vector3.zero)
+        {
+            int randomIndex = Random.Range(0, footstepsSE.Length - 1);
+            GManager.instance.PlaySE(footstepsSE[randomIndex]);
+            footstepsIntervalCount = 0f;
         }
     }
 
