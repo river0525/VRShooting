@@ -17,6 +17,8 @@ public class Enemy : MonoBehaviour
     private float LockOffDistance = 20f;
     private bool isLockOn = false;
     private NavMeshAgent navMeshAgent;
+
+    public static bool canMove = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +28,13 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!canMove)
+        {
+            navMeshAgent.destination = transform.position;
+            animator.speed = 0;
+            return;
+        }
+        animator.speed = 1;
         attackTimer += Time.deltaTime;
         randomMoveTimer += Time.deltaTime;
         var playerPos = Player.GetPosition();
@@ -77,6 +86,7 @@ public class Enemy : MonoBehaviour
 
     public void CustomizedOnTriggerEnter(Collider other)
     {
+        if (!canMove) return;
         if (other.gameObject.tag == "PlayerAttack")
         {
             --HP;

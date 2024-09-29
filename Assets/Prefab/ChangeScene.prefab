@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   changeSceneName: BossRoom
-  fade: {fileID: 0}
+  DoorSE: {fileID: 8300000, guid: cf8b375054e116c4eaca4ec8de591e52, type: 3}
 --- !u!65 &653115849862098294
 BoxCollider:
   m_ObjectHideFlags: 0
