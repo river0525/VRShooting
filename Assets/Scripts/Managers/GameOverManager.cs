@@ -24,7 +24,7 @@ public class GameOverManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GManager.instance.PlayerHP == 0 && !isGameOver)
+        if (GManager.instance.playerHP.Get() == 0 && !isGameOver)
         {
             isGameOver = true;
             GameOver();
@@ -43,7 +43,8 @@ public class GameOverManager : MonoBehaviour
     }
     void Retry()
     {
-        GManager.instance.PlayerHP = GManager.instance.maxPlayerHP;
+        int nowHP = GManager.instance.maxPlayerHP;
+        GManager.instance.playerHP = new HP(nowHP, GManager.instance.maxPlayerHP);
         AudioManager.instance.PlaySE(retrySE);
         FadeImage.LoadScene(SceneManager.GetActiveScene().name);
     }

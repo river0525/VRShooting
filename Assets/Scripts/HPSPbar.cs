@@ -19,7 +19,7 @@ public class HPSPbar : MonoBehaviour
     {
         if (!stopBar)
         {
-            hpBar.fillAmount = GManager.instance.PlayerHP / (float)GManager.instance.maxPlayerHP;
+            hpBar.fillAmount = GManager.instance.playerHP.Get() / (float)GManager.instance.maxPlayerHP;
             spBar.fillAmount = GManager.instance.PlayerSP / GManager.instance.maxPlayerSP;
         }
     }

@@ -5,13 +5,14 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private int HP = 3;
+    [SerializeField] private int maxHP = 3;
     [SerializeField] private float attackInterval = 1f;
     [SerializeField] private float randomMoveInterval = 5f;
     [SerializeField] private float randomMoveBreakTime = 1f;
     [SerializeField] private TrackingArea trackingArea;
     [SerializeField] private Animator animator;
 
+    private HP hp;
     private float attackTimer = 0f;
     private float randomMoveTimer = 0f;
     private float LockOffDistance = 20f;
@@ -23,6 +24,8 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        var nowHP = maxHP;
+        hp = new HP(nowHP, maxHP);
     }
 
     // Update is called once per frame
@@ -89,9 +92,10 @@ public class Enemy : MonoBehaviour
         if (!canMove) return;
         if (other.gameObject.tag == "PlayerAttack")
         {
-            --HP;
+            var damage = 1;
+            hp.Subtract(damage);
             isLockOn = true;
-            if (HP <= 0) animator.SetBool("isDead", true);
+            if (hp.Get() == 0) animator.SetBool("isDead", true);
         }
     }
 }
