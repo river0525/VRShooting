@@ -119,7 +119,7 @@ public class Player : MonoBehaviour
             GameObject b = Instantiate(bullet, muzzle.position, muzzle.rotation);
             Bullet bulletScript = b.GetComponent<Bullet>();
             bulletScript.maxMoveDistance = maxRayDistance;
-            GManager.instance.PlaySE(shotSE);
+            AudioManager.instance.PlaySE(shotSE);
             bulletIntervalCount = 0;
         }
     }
@@ -129,7 +129,7 @@ public class Player : MonoBehaviour
         if (characterController.isGrounded && footstepsIntervalCount >= interval && moveVec != Vector3.zero)
         {
             int randomIndex = Random.Range(0, footstepsSE.Length - 1);
-            GManager.instance.PlaySE(footstepsSE[randomIndex]);
+            AudioManager.instance.PlaySE(footstepsSE[randomIndex]);
             footstepsIntervalCount = 0f;
         }
     }

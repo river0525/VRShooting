@@ -42,7 +42,7 @@ public class Menu : MonoBehaviour
         menuObj.SetActive(true);
         Player.canMove = false;
         Enemy.canMove = false;
-        GManager.instance.PlaySE(openMenuSE);
+        AudioManager.instance.PlaySE(openMenuSE);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         cmVcam1.SetActive(false);
@@ -55,7 +55,7 @@ public class Menu : MonoBehaviour
         menuObj.SetActive(false);
         Player.canMove = true;
         Enemy.canMove = true;
-        GManager.instance.PlaySE(closeMenuSE);
+        AudioManager.instance.PlaySE(closeMenuSE);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         cmVcam1.SetActive(true);

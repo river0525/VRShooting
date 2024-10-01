@@ -19,7 +19,7 @@ public class Entrance : MonoBehaviour
         {
             FadeImage.LoadScene(changeSceneName);
             Player.canMove = false;
-            GManager.instance.PlaySE(DoorSE);
+            AudioManager.instance.PlaySE(DoorSE);
         }
     }
 }

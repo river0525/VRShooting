@@ -42,7 +42,6 @@ public class GManager : MonoBehaviour
     private float playerSP;
     private int lastEnemyID;
     private float timer = 0f;
-    private AudioSource audioSource;
 
     private void Awake()
     {
@@ -53,7 +52,6 @@ public class GManager : MonoBehaviour
             lastEnemyID = gameObject.GetInstanceID();//é©ï™ÇÃIDÇ≈èâä˙âª
             playerHP = maxPlayerHP;
             playerSP = maxPlayerSP;
-            audioSource = GetComponent<AudioSource>();
         }
         else
         {
@@ -72,11 +70,6 @@ public class GManager : MonoBehaviour
         lastEnemyID = enemyID;
         timer = 0f;
         PlayerHP -= damage;
-        PlaySE(playerDamageSE);
-    }
-
-    public void PlaySE(AudioClip audio)
-    {
-        audioSource.PlayOneShot(audio);
+        AudioManager.instance.PlaySE(playerDamageSE);
     }
 }

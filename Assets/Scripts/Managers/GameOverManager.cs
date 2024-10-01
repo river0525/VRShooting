@@ -39,12 +39,12 @@ public class GameOverManager : MonoBehaviour
         Entrance.canEnter = false;
         Player.canMove = false;
         HPSPbar.stopBar = true;
-        GManager.instance.PlaySE(gameOverSE);
+        AudioManager.instance.PlaySE(gameOverSE);
     }
     void Retry()
     {
         GManager.instance.PlayerHP = GManager.instance.maxPlayerHP;
-        GManager.instance.PlaySE(retrySE);
+        AudioManager.instance.PlaySE(retrySE);
         FadeImage.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
