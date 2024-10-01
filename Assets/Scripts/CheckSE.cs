@@ -8,6 +8,6 @@ public class CheckSE : MonoBehaviour,IPointerUpHandler
     [SerializeField] AudioClip checkSE;
     public void OnPointerUp(PointerEventData eventData)
     {
-        GManager.instance.PlaySE(checkSE);
+        AudioManager.instance.PlaySE(checkSE);
     }
 }
