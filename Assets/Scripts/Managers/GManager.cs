@@ -9,19 +9,6 @@ public class GManager : MonoBehaviour
     public int maxPlayerHP = 5;
     public int maxPlayerSP = 5;
 
-    public int PlayerHP {
-        get
-        {
-            return playerHP;
-        }
-        set
-        {
-            if (value < 0) playerHP = 0;
-            else if (value > maxPlayerHP) playerHP = maxPlayerHP;
-            else playerHP = value;
-        } 
-    }
-
     public float PlayerSP
     {
         get
@@ -38,7 +25,7 @@ public class GManager : MonoBehaviour
     [SerializeField] float playerDamageInterval = 0.5f;
     [SerializeField] AudioClip playerDamageSE;
 
-    private int playerHP;
+    [HideInInspector] public HP playerHP;
     private float playerSP;
     private int lastEnemyID;
     private float timer = 0f;
@@ -50,7 +37,8 @@ public class GManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(this.gameObject);
             lastEnemyID = gameObject.GetInstanceID();//é©ï™ÇÃIDÇ≈èâä˙âª
-            playerHP = maxPlayerHP;
+            var nowHP = maxPlayerHP;
+            playerHP = new HP(nowHP,maxPlayerHP);
             playerSP = maxPlayerSP;
         }
         else
@@ -69,7 +57,7 @@ public class GManager : MonoBehaviour
         if ((enemyID == lastEnemyID && timer < playerDamageInterval) || !Player.canMove) return;
         lastEnemyID = enemyID;
         timer = 0f;
-        PlayerHP -= damage;
+        playerHP.Subtract(damage);
         AudioManager.instance.PlaySE(playerDamageSE);
     }
 }
