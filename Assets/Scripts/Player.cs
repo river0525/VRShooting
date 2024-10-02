@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     private CharacterController characterController;
     private RaycastHit hit;
     private Vector3 moveVec;
+    private PlayerStatus playerStatus;
 
     private static Transform playerTransform;
     public static bool canMove = true;
@@ -39,6 +40,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+        playerStatus = GetComponent<PlayerStatus>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         playerTransform = transform;
@@ -88,16 +90,16 @@ public class Player : MonoBehaviour
         }
         var horizontalRotation = Quaternion.AngleAxis(Camera.main.transform.eulerAngles.y, Vector3.up);
         moveVec = (horizontalRotation * new Vector3(x, 0, z)).normalized;
-        if (Input.GetButton("Run") && GManager.instance.PlayerSP > 0 && moveVec != Vector3.zero)
+        if (Input.GetButton("Run") && playerStatus.GetSP() > 0 && moveVec != Vector3.zero)
         {
             moveVec *= runSpeed;
-            GManager.instance.PlayerSP -= runSP * Time.deltaTime;
+            playerStatus.SubtractSP(runSP * Time.deltaTime);
             PlayFootstepsSE(0.3f);
         }
         else
         {
             moveVec *= walkSpeed;
-            GManager.instance.PlayerSP += recoverSP * Time.deltaTime;
+            playerStatus.AddSP(recoverSP * Time.deltaTime);
             PlayFootstepsSE(0.5f);
         }
         var jumpVec = Vector3.up * y;

@@ -2193,6 +2193,7 @@ GameObject:
   - component: {fileID: 2544959953049881178}
   - component: {fileID: 2544959953049881176}
   - component: {fileID: 2544959953049881179}
+  - component: {fileID: 7238065442790907895}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2265,6 +2266,22 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7238065442790907895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2544959953049881181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1665a7aedde4710448e5a3e91168cb84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 5
+  maxSP: 5
+  playerDamageInterval: 0.5
+  playerDamageSE: {fileID: 8300000, guid: ea2f417a6b30a3146a93b43a6573eb82, type: 3}
 --- !u!1 &2544959953182764344
 GameObject:
   m_ObjectHideFlags: 0

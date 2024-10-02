@@ -44,4 +44,13 @@ public class HP
     {
         return Amount;
     }
+    public int GetMax()
+    {
+        return MAX;
+    }
+
+    public void FullRecover()
+    {
+        Amount = MAX;
+    }
 }

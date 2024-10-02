@@ -12,6 +12,7 @@ public class GameOverManager : MonoBehaviour
     private static AudioClip gameOverSE;
     private static AudioClip retrySE;
     private bool isGameOver = false;
+    private PlayerStatus playerStatus;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,12 +20,14 @@ public class GameOverManager : MonoBehaviour
         gameOverImg.SetActive(false);
         gameOverSE = inputGameOverSE;
         retrySE = inputRetrySE;
+        var playerObj = GameObject.FindWithTag("Player");
+        playerStatus = playerObj.GetComponent<PlayerStatus>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (GManager.instance.playerHP.Get() == 0 && !isGameOver)
+        if (playerStatus.GetHP() == 0 && !isGameOver)
         {
             isGameOver = true;
             GameOver();
@@ -43,8 +46,7 @@ public class GameOverManager : MonoBehaviour
     }
     void Retry()
     {
-        int nowHP = GManager.instance.maxPlayerHP;
-        GManager.instance.playerHP = new HP(nowHP, GManager.instance.maxPlayerHP);
+        playerStatus.FullRecover();
         AudioManager.instance.PlaySE(retrySE);
         FadeImage.LoadScene(SceneManager.GetActiveScene().name);
     }

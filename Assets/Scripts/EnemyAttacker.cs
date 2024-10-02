@@ -8,15 +8,18 @@ public class EnemyAttacker : MonoBehaviour
     [SerializeField] int damage = 1;
 
     private int enemyID;
+    private PlayerStatus playerStatus;
     private void Start()
     {
         enemyID = enemy.GetInstanceID();
+        var playerObj = GameObject.FindWithTag("Player");
+        playerStatus = playerObj.GetComponent<PlayerStatus>();
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
-            GManager.instance.PlayerDamage(damage, enemyID);
+            playerStatus.PlayerDamage(damage, enemyID);
         }
     }
 }
