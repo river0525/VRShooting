@@ -18,7 +18,7 @@ public class Entrance : MonoBehaviour
         if (other.gameObject.tag == "Player" && Input.GetButtonDown("ChangeScene") && canEnter)
         {
             FadeImage.LoadScene(changeSceneName);
-            Player.canMove = false;
+            PlayerMover.canMove = false;
             AudioManager.instance.PlaySE(DoorSE);
         }
     }

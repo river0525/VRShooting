@@ -43,7 +43,7 @@ public class PlayerStatus : MonoBehaviour
 
     public void PlayerDamage(int damage, int enemyID)
     {
-        if ((enemyID == lastEnemyID && timer < playerDamageInterval) || !Player.canMove) return;
+        if ((enemyID == lastEnemyID && timer < playerDamageInterval) || !PlayerMover.canMove) return;
         lastEnemyID = enemyID;
         timer = 0f;
         hp.Subtract(damage);

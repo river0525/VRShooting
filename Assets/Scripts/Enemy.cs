@@ -40,7 +40,7 @@ public class Enemy : MonoBehaviour
         animator.speed = 1;
         attackTimer += Time.deltaTime;
         randomMoveTimer += Time.deltaTime;
-        var playerPos = Player.GetPosition();
+        var playerPos = PlayerMover.GetPosition();
         var dis = Vector3.Distance(playerPos, transform.position);
         if (dis >= LockOffDistance) isLockOn = false;
         if (trackingArea.inThisArea) isLockOn = true;

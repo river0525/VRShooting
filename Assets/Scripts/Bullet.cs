@@ -22,7 +22,7 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (!Player.canMove) return;
+        if (!PlayerMover.canMove) return;
         if (Vector3.Distance(startPos, transform.position) > maxMoveDistance) Destroy(gameObject);
         else rb.MovePosition(transform.position + transform.rotation * Vector3.forward * speed * Time.deltaTime);
     }

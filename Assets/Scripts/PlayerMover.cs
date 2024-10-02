@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerMover : MonoBehaviour
 {
     [Header("ˆÚ“®‚Ìİ’è")]
     [SerializeField] float walkSpeed = 1;

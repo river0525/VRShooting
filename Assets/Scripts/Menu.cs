@@ -40,7 +40,7 @@ public class Menu : MonoBehaviour
         if (menuOpened) return;
         menuOpened = true;
         menuObj.SetActive(true);
-        Player.canMove = false;
+        PlayerMover.canMove = false;
         Enemy.canMove = false;
         AudioManager.instance.PlaySE(openMenuSE);
         Cursor.visible = true;
@@ -53,7 +53,7 @@ public class Menu : MonoBehaviour
         if (!menuOpened) return;
         menuOpened = false;
         menuObj.SetActive(false);
-        Player.canMove = true;
+        PlayerMover.canMove = true;
         Enemy.canMove = true;
         AudioManager.instance.PlaySE(closeMenuSE);
         Cursor.visible = false;
