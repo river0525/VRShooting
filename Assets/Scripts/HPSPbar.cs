@@ -8,10 +8,14 @@ public class HPSPbar : MonoBehaviour
     [SerializeField] Image hpBar;
     [SerializeField] Image spBar;
     public static bool stopBar = false;
+
+    private PlayerStatus playerStatus;
     // Start is called before the first frame update
     void Start()
     {
         stopBar = false;
+        var playerObj = GameObject.FindWithTag("Player");
+        playerStatus = playerObj.GetComponent<PlayerStatus>();
     }
 
     // Update is called once per frame
@@ -19,8 +23,8 @@ public class HPSPbar : MonoBehaviour
     {
         if (!stopBar)
         {
-            hpBar.fillAmount = GManager.instance.playerHP.Get() / (float)GManager.instance.maxPlayerHP;
-            spBar.fillAmount = GManager.instance.PlayerSP / GManager.instance.maxPlayerSP;
+            hpBar.fillAmount = playerStatus.GetHP() / (float)playerStatus.GetMaxHP();
+            spBar.fillAmount = playerStatus.GetSP() / playerStatus.GetMaxSP();
         }
     }
 }
