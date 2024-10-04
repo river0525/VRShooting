@@ -746,6 +746,10 @@ PrefabInstance:
       propertyPath: attackInterval
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7545606825562666847, guid: 68f5d81bbea28ae4c96943518c25e291, type: 3}
+      propertyPath: MaxRandomMoveDistance
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68f5d81bbea28ae4c96943518c25e291, type: 3}
 --- !u!4 &6038973096758868688 stripped

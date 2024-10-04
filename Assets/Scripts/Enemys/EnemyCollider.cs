@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyCollider : MonoBehaviour
 {
-    [SerializeField] Enemy enemy;
+    [SerializeField] EnemyBase enemy;
     // Start is called before the first frame update
     void Start()
     {

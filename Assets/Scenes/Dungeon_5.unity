@@ -3987,6 +3987,7 @@ GameObject:
   - component: {fileID: 270674294}
   - component: {fileID: 270674296}
   - component: {fileID: 270674295}
+  - component: {fileID: 270674297}
   m_Layer: 0
   m_Name: Wooden_Gate_1B 1
   m_TagString: Untagged
@@ -4059,6 +4060,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 270674293}
   m_Mesh: {fileID: 4300000, guid: 8f2ab02eb1db68c44a599fec89ed9dc2, type: 3}
+--- !u!65 &270674297
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 270674293}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.0000005, y: 0.1000004, z: 4.0000005}
+  m_Center: {x: -1.9723048e-15, y: -0.000000059604634, z: -0.000007390976}
 --- !u!1001 &274322949
 PrefabInstance:
   m_ObjectHideFlags: 0
