@@ -42,13 +42,8 @@ public class EnemyBase : MonoBehaviour
     void Update()
     {
         attackTimer += Time.deltaTime;
-        MoveToPlayer(runSpeed, stoppingDistance);//å„Ç≈çÌèú
-        StartRandomMove(walkSpeed);
-        JudgeReached();
-        Attack();
-        LookAtPlayer();
     }
-    public void MoveToPlayer(float speed, float stoppingDistance)
+    public void MoveToPlayer()
     {
         if (!canMove) return;
         if (!IsLockOn()) return;
@@ -59,11 +54,11 @@ public class EnemyBase : MonoBehaviour
         var dis = Vector3.Distance(playerPos, transform.position);
         if (dis <= stoppingDistance) return;
         navMeshAgent.stoppingDistance = stoppingDistance;
-        navMeshAgent.speed = speed;
+        navMeshAgent.speed = runSpeed;
         navMeshAgent.SetDestination(playerPos);
         animator.SetBool(animMoveFlag, true);
     }
-    private void Attack()
+    public void Attack()
     {
         if (!canMove) return;
         if (!IsLockOn()) return;
@@ -74,7 +69,7 @@ public class EnemyBase : MonoBehaviour
         attackTimer = 0f;
         animator.SetTrigger(animAttackFlag);
     }
-    private void LookAtPlayer()
+    public void LookAtPlayer()
     {
         if (!canMove) return;
         var playerPos = PlayerMover.GetPosition();
@@ -101,7 +96,7 @@ public class EnemyBase : MonoBehaviour
         var randomPos = new Vector3(xPos, 0, zPos);
         navMeshAgent.destination = randomPos;
     }
-    private void StartRandomMove(float speed)
+    public void StartRandomMove()
     {
         if (!canMove) return;
         if (IsLockOn()) return;
@@ -110,7 +105,7 @@ public class EnemyBase : MonoBehaviour
         isRandomMove = true;
         SetRandomPosition();
         navMeshAgent.stoppingDistance = 0f;
-        navMeshAgent.speed = speed;
+        navMeshAgent.speed = walkSpeed;
         animator.SetBool(animMoveFlag, true);
         Invoke("RandomMoveWait", randomMoveTime);
     }
@@ -125,7 +120,7 @@ public class EnemyBase : MonoBehaviour
         navMeshAgent.destination = transform.position;
         Invoke("ResetRandomMoveFlags", randomMoveWaitTime);
     }
-    private void JudgeReached()
+    public void JudgeReached()
     {
         if (navMeshAgent.destination == transform.position && isRandomMove) RandomMoveWait();
     }
