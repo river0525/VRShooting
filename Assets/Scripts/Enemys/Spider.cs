@@ -14,15 +14,10 @@ public class Spider : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
-        NormalAttack();
-    }
-    public void Move()
-    {
-        
-    }
-    public void NormalAttack()
-    {
-
+        enemyBase.MoveToPlayer();
+        enemyBase.StartRandomMove();
+        enemyBase.JudgeReached();
+        enemyBase.Attack();
+        enemyBase.LookAtPlayer();
     }
 }
