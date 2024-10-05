@@ -21,20 +21,17 @@ public class TrackingArea : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Player") //Ž‹ŠE‚Ì”ÍˆÍ“à‚Ì“–‚½‚è”»’è
+        if (other.gameObject.tag != "Player") return;
+        //Ž‹ŠE‚ÌŠp“x“à‚ÉŽû‚Ü‚Á‚Ä‚¢‚é‚©
+        Vector3 posDelta = other.transform.position - transform.position;
+        float target_angle = Vector3.Angle(transform.forward, posDelta);
+        if (target_angle > angle) //target_angle‚ªangle‚ÉŽû‚Ü‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
         {
-            //Ž‹ŠE‚ÌŠp“x“à‚ÉŽû‚Ü‚Á‚Ä‚¢‚é‚©
-            Vector3 posDelta = other.transform.position - transform.position;
-            float target_angle = Vector3.Angle(transform.forward, posDelta);
-
-            if (target_angle < angle) //target_angle‚ªangle‚ÉŽû‚Ü‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
-            {
-                if (Physics.Raycast(transform.position, posDelta, out RaycastHit hit)) //Ray‚ðŽg—p‚µ‚Ätarget‚É“–‚½‚Á‚Ä‚¢‚é‚©”»•Ê
-                {
-                    if (hit.collider == other) inThisArea = true;
-                }
-            }
+            inThisArea = false;
+            return;
         }
+        if (!Physics.Raycast(transform.position, posDelta, out RaycastHit hit)) return;
+        if (hit.collider == other) inThisArea = true;
     }
 
     private void OnTriggerExit(Collider other)
