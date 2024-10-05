@@ -785,11 +785,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ab98291918e5024cb7c1fbf3964e594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!195 &6038973096758868699 stripped
-NavMeshAgent:
-  m_CorrespondingSourceObject: {fileID: 7545606825562666832, guid: 68f5d81bbea28ae4c96943518c25e291, type: 3}
-  m_PrefabInstance: {fileID: 4285702144568266123}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7582285448655471351
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1555,19 +1550,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyObj: {fileID: 6038973096758868698}
---- !u!114 &8236254780514144769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7582285448655439347}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a212ebd203ea5ee4386ee279c6a8fd18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nav: {fileID: 6038973096758868699}
 --- !u!1 &7582285448655439349 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100098, guid: f5a9bd478ca094495a4520e37f57420d, type: 3}

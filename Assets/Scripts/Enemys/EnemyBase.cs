@@ -13,12 +13,12 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] private float walkSpeed = 1f;
     [SerializeField] private float runSpeed = 3f;
     [SerializeField] private float stoppingDistance = 3f;
+    [SerializeField] private float LockOffDistance = 20f;
     [SerializeField] private TrackingArea trackingArea;
     [SerializeField] private Animator animator;
 
     private HP hp;
     private float attackTimer = 0f;
-    private float LockOffDistance = 20f;
     private string animMoveFlag = "isMove";
     private string animAttackFlag = "isAttack";
     private string animDeadFlag = "isDead";
@@ -72,6 +72,8 @@ public class EnemyBase : MonoBehaviour
     public void LookAtPlayer()
     {
         if (!canMove) return;
+        if (!IsLockOn()) return;
+        Debug.Log("aaa");
         var playerPos = PlayerMover.GetPosition();
         var dis = Vector3.Distance(playerPos, transform.position);
         if (dis > stoppingDistance) return;

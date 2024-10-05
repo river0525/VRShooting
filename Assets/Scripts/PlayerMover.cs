@@ -116,8 +116,8 @@ public class PlayerMover : MonoBehaviour
             int centerX = Screen.width / 2;
             int centerY = Screen.height / 2;
             Vector3 origin = Camera.main.ScreenToWorldPoint(new Vector3(centerX, centerY, 1.5f));//1.5fÇÕèeå˚ÇÃí∑Ç≥
-            if (Physics.Raycast(origin, Camera.main.transform.rotation * Vector3.forward, out RaycastHit hit, maxRayDistance)) muzzle.transform.LookAt(hit.point);
-            else muzzle.transform.LookAt(Camera.main.transform.rotation * (Camera.main.transform.position + Vector3.forward * maxRayDistance));
+            if (Physics.Raycast(origin, Camera.main.transform.forward, out RaycastHit hit, maxRayDistance)) muzzle.transform.LookAt(hit.point);
+            else muzzle.transform.LookAt(origin + Camera.main.transform.forward * maxRayDistance);
             GameObject b = Instantiate(bullet, muzzle.position, muzzle.rotation);
             Bullet bulletScript = b.GetComponent<Bullet>();
             bulletScript.maxMoveDistance = maxRayDistance;
