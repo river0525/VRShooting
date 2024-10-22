@@ -12,15 +12,12 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] private float randomMoveWaitTime = 1f;
     [SerializeField] private float walkSpeed = 1f;
     [SerializeField] private float runSpeed = 3f;
-    [SerializeField] private float stoppingDistance = 3f;
     [SerializeField] private float LockOffDistance = 20f;
     [SerializeField] private TrackingArea trackingArea;
-    [SerializeField] private Animator animator;
-
+    
     private HP hp;
     private float attackTimer = 0f;
     private string animMoveFlag = "isMove";
-    private string animAttackFlag = "isAttack";
     private string animDeadFlag = "isDead";
     private bool damaged = false;
     private bool isRandomMove = false;
@@ -28,11 +25,15 @@ public class EnemyBase : MonoBehaviour
     private bool canMove = true;
     private NavMeshAgent navMeshAgent;
     private Vector3 centralPos;
+    private IEnemyAttack iEnemyAttack;
+    private Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        iEnemyAttack = GetComponent<IEnemyAttack>();
+        animator = GetComponentInChildren<Animator>();
         var nowHP = maxHP;
         hp = new HP(nowHP, maxHP);
         centralPos = transform.position;
@@ -42,18 +43,21 @@ public class EnemyBase : MonoBehaviour
     void Update()
     {
         attackTimer += Time.deltaTime;
+        MoveToPlayer();
+        StartRandomMove();
+        JudgeReached();
+        Attack();
+        LookAtPlayer();
     }
     public void MoveToPlayer()
     {
         if (!canMove) return;
         if (!IsLockOn()) return;
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName(animAttackFlag)) return;
+        if (iEnemyAttack.IsAttack()) return;
         ResetRandomMoveFlags();
         animator.speed = 1;
+        if (iEnemyAttack.InAttackArea()) return;
         var playerPos = PlayerMover.GetPosition();
-        var dis = Vector3.Distance(playerPos, transform.position);
-        if (dis <= stoppingDistance) return;
-        navMeshAgent.stoppingDistance = stoppingDistance;
         navMeshAgent.speed = runSpeed;
         navMeshAgent.SetDestination(playerPos);
         animator.SetBool(animMoveFlag, true);
@@ -62,21 +66,19 @@ public class EnemyBase : MonoBehaviour
     {
         if (!canMove) return;
         if (!IsLockOn()) return;
-        var playerPos = PlayerMover.GetPosition();
-        var dis = Vector3.Distance(playerPos, transform.position);
-        if (dis > stoppingDistance) return;
+        if (!iEnemyAttack.InAttackArea()) return;
         if (attackTimer < attackInterval) return;
+        navMeshAgent.speed = 0;
         attackTimer = 0f;
-        animator.SetTrigger(animAttackFlag);
+        iEnemyAttack.Attack();
     }
     public void LookAtPlayer()
     {
         if (!canMove) return;
         if (!IsLockOn()) return;
-        Debug.Log("aaa");
+        if (!iEnemyAttack.InAttackArea()) return;
+        navMeshAgent.speed = 0;
         var playerPos = PlayerMover.GetPosition();
-        var dis = Vector3.Distance(playerPos, transform.position);
-        if (dis > stoppingDistance) return;
         var direction = playerPos - transform.position;
         direction.y = 0;
         var lookRotation = Quaternion.LookRotation(direction, Vector3.up);
@@ -96,7 +98,7 @@ public class EnemyBase : MonoBehaviour
         var xPos = centralPos.x + Random.Range(MIN, MAX);
         var zPos = centralPos.z + Random.Range(MIN, MAX);
         var randomPos = new Vector3(xPos, 0, zPos);
-        navMeshAgent.destination = randomPos;
+        navMeshAgent.SetDestination(randomPos);
     }
     public void StartRandomMove()
     {
@@ -119,7 +121,7 @@ public class EnemyBase : MonoBehaviour
         isRandomMove = false;
         isRandomMoveWait = true;
         animator.SetBool(animMoveFlag, false);
-        navMeshAgent.destination = transform.position;
+        navMeshAgent.speed = 0;
         Invoke("ResetRandomMoveFlags", randomMoveWaitTime);
     }
     public void JudgeReached()
@@ -134,9 +136,7 @@ public class EnemyBase : MonoBehaviour
     }
     private bool IsLockOn()
     {
-        var playerPos = PlayerMover.GetPosition();
-        var dis = Vector3.Distance(playerPos, transform.position);
-        if (dis >= LockOffDistance)
+        if (GetPlayerDistance() >= LockOffDistance)
         {
             damaged = false;
             return false;
@@ -160,7 +160,7 @@ public class EnemyBase : MonoBehaviour
     {
         if (!canMove) return;
         canMove = false;
-        navMeshAgent.destination = transform.position;
+        navMeshAgent.speed = 0;
         animator.speed = 0;
     }
     public void Restart()
@@ -168,5 +168,11 @@ public class EnemyBase : MonoBehaviour
         if (canMove) return;
         canMove = true;
         animator.speed = 1;
+    }
+
+    public float GetPlayerDistance()
+    {
+        var playerPos = PlayerMover.GetPosition();
+        return Vector3.Distance(playerPos, transform.position);
     }
 }
