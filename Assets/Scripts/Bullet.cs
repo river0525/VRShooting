@@ -6,8 +6,7 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] float speed = 1;
     [SerializeField] string[] ignoreTag;
-
-    [HideInInspector] public float maxMoveDistance = 100;
+    [SerializeField] float maxMoveDistance = 100;
 
     private Vector3 startPos;
     private Rigidbody rb;

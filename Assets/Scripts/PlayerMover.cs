@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class PlayerMover : MonoBehaviour
 {
@@ -16,13 +17,14 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] float headRayRadius = 1;
     [SerializeField] Transform headRayOrigin;
     [SerializeField] AudioClip[] footstepsSE;
+    [SerializeField] LineRenderer laserPointer;
 
     [Header("èeÇÃê›íË")]
     [SerializeField] float bulletInterval;
-    [SerializeField] float maxRayDistance = 100;
     [SerializeField] GameObject bullet;
     [SerializeField] Transform muzzle;
     [SerializeField] AudioClip shotSE;
+    [SerializeField] GameObject gun;
 
     private float startJumpHeight;
     private float bulletIntervalCount = 0;
@@ -50,7 +52,14 @@ public class PlayerMover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!canMove) return;
+        if (!canMove)
+        {
+            laserPointer.enabled = true;
+            gun.SetActive(false);
+            return;
+        }
+        laserPointer.enabled = false;
+        gun.SetActive(true);
         PlayerMove();
         Shot();
     }
@@ -74,10 +83,10 @@ public class PlayerMover : MonoBehaviour
         footstepsIntervalCount += Time.deltaTime;
 
         //à⁄ìÆèàóù
-        var x = Input.GetAxis("Horizontal");
         var y = -gravity;
-        var z = Input.GetAxis("Vertical");
-        if (characterController.isGrounded && Input.GetButtonDown("Jump"))
+        Vector2 input = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick, OVRInput.Controller.LTouch);
+
+        if (characterController.isGrounded && OVRInput.GetDown(OVRInput.Button.One, OVRInput.Controller.RTouch))
         {
             isJump = true;
             startJumpHeight = transform.position.y;
@@ -88,9 +97,10 @@ public class PlayerMover : MonoBehaviour
             if (transform.position.y - startJumpHeight > maxJumpHeight || isHit) isJump = false;
             else y = jumpSpeed;
         }
-        var horizontalRotation = Quaternion.AngleAxis(Camera.main.transform.eulerAngles.y, Vector3.up);
-        moveVec = (horizontalRotation * new Vector3(x, 0, z)).normalized;
-        if (Input.GetButton("Run") && playerStatus.GetSP() > 0 && moveVec != Vector3.zero)
+        var vrCamera = GameObject.Find("PlayerSet/OVRCameraRig/TrackingSpace/CenterEyeAnchor").transform;
+        var horizontalRotation = Quaternion.AngleAxis(vrCamera.eulerAngles.y, Vector3.up);
+        moveVec = (horizontalRotation * new Vector3(input.x, 0, input.y)).normalized;
+        if (OVRInput.Get(OVRInput.Button.PrimaryThumbstick, OVRInput.Controller.RTouch) && playerStatus.GetSP() > 0 && moveVec != Vector3.zero)
         {
             moveVec *= runSpeed;
             playerStatus.SubtractSP(runSP * Time.deltaTime);
@@ -111,16 +121,11 @@ public class PlayerMover : MonoBehaviour
     {
         //íeÇÃèàóù
         bulletIntervalCount += Time.deltaTime;
-        if (Input.GetButton("Shot") && bulletIntervalCount >= bulletInterval)
+        if (OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger, OVRInput.Controller.RTouch) && bulletIntervalCount >= bulletInterval)
         {
             int centerX = Screen.width / 2;
             int centerY = Screen.height / 2;
-            Vector3 origin = Camera.main.ScreenToWorldPoint(new Vector3(centerX, centerY, 1.5f));//1.5fÇÕèeå˚ÇÃí∑Ç≥
-            if (Physics.Raycast(origin, Camera.main.transform.forward, out RaycastHit hit, maxRayDistance)) muzzle.transform.LookAt(hit.point);
-            else muzzle.transform.LookAt(origin + Camera.main.transform.forward * maxRayDistance);
-            GameObject b = Instantiate(bullet, muzzle.position, muzzle.rotation);
-            Bullet bulletScript = b.GetComponent<Bullet>();
-            bulletScript.maxMoveDistance = maxRayDistance;
+            Instantiate(bullet, muzzle.position, muzzle.rotation);
             AudioManager.instance.PlaySE(shotSE);
             bulletIntervalCount = 0;
         }

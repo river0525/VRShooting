@@ -5,23 +5,26 @@ using UnityEngine.SceneManagement;
 
 public class GameOverManager : MonoBehaviour
 {
-    [SerializeField] GameObject inputGameOverImg;
     [SerializeField] AudioClip inputGameOverSE;
     [SerializeField] AudioClip inputRetrySE;
-    private static GameObject gameOverImg;
+    [SerializeField] GameObject inputGameOverText;
     private static AudioClip gameOverSE;
     private static AudioClip retrySE;
+    private static GameObject gameOverText;
+    private SceneLoader sceneLoader;
     private bool isGameOver = false;
     private PlayerStatus playerStatus;
     // Start is called before the first frame update
     void Start()
     {
-        gameOverImg = inputGameOverImg;
-        gameOverImg.SetActive(false);
         gameOverSE = inputGameOverSE;
         retrySE = inputRetrySE;
+        gameOverText = inputGameOverText;
+        gameOverText.SetActive(false);
         var playerObj = GameObject.FindWithTag("Player");
         playerStatus = playerObj.GetComponent<PlayerStatus>();
+        var sceneLoaderObj = GameObject.FindWithTag("SceneLoader");
+        sceneLoader = sceneLoaderObj.GetComponent<SceneLoader>();
     }
 
     // Update is called once per frame
@@ -32,22 +35,22 @@ public class GameOverManager : MonoBehaviour
             isGameOver = true;
             GameOver();
         }
-        if (isGameOver && Input.GetButtonDown("Retry")) Retry();
     }
 
 
     public static void GameOver()
     {
-        gameOverImg.SetActive(true);
         Entrance.canEnter = false;
         PlayerMover.canMove = false;
         HPSPbar.stopBar = true;
+        gameOverText.SetActive(true);
         AudioManager.instance.PlaySE(gameOverSE);
     }
-    void Retry()
+    public void Retry()
     {
+        if (!isGameOver) return;
         playerStatus.FullRecover();
         AudioManager.instance.PlaySE(retrySE);
-        FadeImage.LoadScene(SceneManager.GetActiveScene().name);
+        sceneLoader.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

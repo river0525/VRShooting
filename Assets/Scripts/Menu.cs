@@ -30,7 +30,7 @@ public class Menu : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("Menu"))
+        if (OVRInput.GetDown(OVRInput.Button.Start, OVRInput.Controller.LTouch))
         {
             if (menuOpened) CloseMenu();
             else OpenMenu();
