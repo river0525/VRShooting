@@ -6,11 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/BossRoom.unity
-    guid: fd0900619421afb41b083f734d5df60f
-  - enabled: 1
     path: Assets/Scenes/Dungeon_5.unity
     guid: f5e776901b6383647a1509a12334f8f2
+  - enabled: 1
+    path: Assets/Scenes/BossRoom.unity
+    guid: fd0900619421afb41b083f734d5df60f
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: b58cd8a21aea264408b91e64f0d7d943, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: d9805aba9939ccf46ab558ac93c4fe51, type: 2}
