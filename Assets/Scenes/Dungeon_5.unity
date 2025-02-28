@@ -33702,7 +33702,15 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1168941113509085312, guid: ed6fc7fe6bea6cf46952ee708970c646, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168941113509085312, guid: ed6fc7fe6bea6cf46952ee708970c646, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168941113509085312, guid: ed6fc7fe6bea6cf46952ee708970c646, type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4092699081995198251, guid: ed6fc7fe6bea6cf46952ee708970c646, type: 3}
@@ -33750,7 +33758,15 @@ PrefabInstance:
       value: PlayerSet
       objectReference: {fileID: 0}
     - target: {fileID: 7066534834875711617, guid: ed6fc7fe6bea6cf46952ee708970c646, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7066534834875711617, guid: ed6fc7fe6bea6cf46952ee708970c646, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7066534834875711617, guid: ed6fc7fe6bea6cf46952ee708970c646, type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
