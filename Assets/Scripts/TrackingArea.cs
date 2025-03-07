@@ -22,8 +22,10 @@ public class TrackingArea : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag != "Player") return;
+
         //視界の角度内に収まっているか
-        Vector3 posDelta = other.transform.position - transform.position;
+        Vector3 playerCenter = Vector3.up;//プレイヤーの足元から中心までの高さ補正
+        Vector3 posDelta = (other.transform.position + playerCenter) - transform.position;
         float target_angle = Vector3.Angle(transform.forward, posDelta);
         if (target_angle > angle) //target_angleがangleに収まっているかどうか
         {
