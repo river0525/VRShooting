@@ -1911,7 +1911,7 @@ MonoBehaviour:
   closeMenuSE: {fileID: 8300000, guid: b627c92df3ed58f4bb8d1499ff0a7afc, type: 3}
   audioMixer: {fileID: 24100000, guid: 8bf78d66c87a52a4db8ba8910586a27c, type: 2}
   BGMSlider: {fileID: 6571389658977326853}
-  SESlider: {fileID: 0}
+  SESlider: {fileID: 1475267149415080710}
 --- !u!114 &1383415585552432114
 MonoBehaviour:
   m_ObjectHideFlags: 0
