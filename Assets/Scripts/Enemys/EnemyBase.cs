@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class EnemyBase : MonoBehaviour
 {
@@ -14,8 +15,9 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] private float runSpeed = 3f;
     [SerializeField] private float LockOffDistance = 20f;
     [SerializeField] private TrackingArea trackingArea;
+    [SerializeField] private Slider hpBar;
     
-    private HP hp;
+    [HideInInspector] public HP hp;
     private float attackTimer = 0f;
     private string animMoveFlag = "isMove";
     private string animDeadFlag = "isDead";
@@ -43,6 +45,7 @@ public class EnemyBase : MonoBehaviour
     void Update()
     {
         attackTimer += Time.deltaTime;
+        hpBar.value = (float)hp.Get() / hp.GetMax();
         MoveToPlayer();
         StartRandomMove();
         JudgeReached();

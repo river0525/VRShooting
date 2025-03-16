@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
     [SerializeField] GameObject menuObj;
-    [SerializeField] GameObject cmVcam1;
     [SerializeField] AudioClip openMenuSE;
     [SerializeField] AudioClip closeMenuSE;
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] Slider BGMSlider;
     [SerializeField] Slider SESlider;
 
+    private string firstSceneName = "Dungeon_5";
     private bool menuOpened = false;
     private GameObject[] enemys;
 
@@ -51,7 +52,6 @@ public class Menu : MonoBehaviour
         AudioManager.instance.PlaySE(openMenuSE);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        cmVcam1.SetActive(false);
     }
 
     public void CloseMenu()
@@ -69,12 +69,13 @@ public class Menu : MonoBehaviour
         AudioManager.instance.PlaySE(closeMenuSE);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        cmVcam1.SetActive(true);
     }
 
-    public void GoTitle()
+    public void ResetGame()
     {
-        //É^ÉCÉgÉãâÊñ Ç÷ñﬂÇÈèàóùÇèëÇ≠
+        PlayerStatus.Reset();
+        FlagManager.ResetFlag();
+        SceneManager.LoadScene(firstSceneName);
     }
 
     public void SetBGM(float volume)
