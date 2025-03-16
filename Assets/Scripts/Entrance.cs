@@ -5,10 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class Entrance : MonoBehaviour
 {
-    [SerializeField] string changeSceneName;
     [SerializeField] AudioClip DoorSE;
     public static bool canEnter = true;
-    private OVRScreenFade screenFade;
+    private string changeSceneName = "BossRoom";
     private SceneLoader sceneLoader;
 
     private void Start()
@@ -20,13 +19,19 @@ public class Entrance : MonoBehaviour
     // Start is called before the first frame update
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Player" && OVRInput.GetDown(OVRInput.Button.Two, OVRInput.Controller.RTouch) && canEnter)
+        if (other.gameObject.tag != "Player") return;
+        if (!OVRInput.GetDown(OVRInput.Button.One, OVRInput.Controller.RTouch)) return;
+        if (!canEnter) return;
+        if (!FlagManager.CheckFlag(FlagManager.FlagName.getKey))
         {
-            PlayerMover.canMove = false;
-            canEnter = false;
-            AudioManager.instance.PlaySE(DoorSE);
-            sceneLoader.LoadScene(changeSceneName);
+            PlayerStatus.SetPurpose("カギを手に入れろ！");
+            return;
         }
+        PlayerMover.canMove = false;
+        canEnter = false;
+        AudioManager.instance.PlaySE(DoorSE);
+        PlayerStatus.SetPurpose("ボスをたおせ！");
+        sceneLoader.LoadScene(changeSceneName);
     }
     
 }
