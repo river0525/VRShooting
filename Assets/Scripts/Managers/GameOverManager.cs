@@ -42,7 +42,6 @@ public class GameOverManager : MonoBehaviour
     {
         Entrance.canEnter = false;
         PlayerMover.canMove = false;
-        HPSPbar.stopBar = true;
         gameOverText.SetActive(true);
         AudioManager.instance.PlaySE(gameOverSE);
     }

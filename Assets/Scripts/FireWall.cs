@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class FireWall : MonoBehaviour
 {
+    [SerializeField] AudioClip evaporationSE;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -17,6 +18,7 @@ public class FireWall : MonoBehaviour
             PlayerStatus.SetPurpose("バケツをさがせ！");
             return;
         }
+        AudioManager.instance.PlaySE(evaporationSE);
         PlayerStatus.SetPurpose("先に進もう！");
         Destroy(gameObject);
     }

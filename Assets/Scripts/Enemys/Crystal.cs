@@ -27,6 +27,7 @@ public class Crystal : MonoBehaviour
         var damage = 1;
         hp.Subtract(damage);
         if (hp.Get() != 0) return;
+        PlayerStatus.SetPurpose("É{ÉXÇÇΩÇ®ÇπÅI");
         Destroy(barrier);
         Destroy(gameObject);
     }
