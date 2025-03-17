@@ -16,6 +16,7 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] private float LockOffDistance = 20f;
     [SerializeField] private TrackingArea trackingArea;
     [SerializeField] private Slider hpBar;
+    [SerializeField] private AudioClip foundPlayerSE;
     
     [HideInInspector] public HP hp;
     private float attackTimer = 0f;
@@ -25,6 +26,7 @@ public class EnemyBase : MonoBehaviour
     private bool isRandomMove = false;
     private bool isRandomMoveWait = false;
     private bool canMove = true;
+    private bool isLockOn = false;
     private NavMeshAgent navMeshAgent;
     private Vector3 centralPos;
     private IEnemyAttack iEnemyAttack;
@@ -46,6 +48,8 @@ public class EnemyBase : MonoBehaviour
     {
         attackTimer += Time.deltaTime;
         hpBar.value = (float)hp.Get() / hp.GetMax();
+        if (!isLockOn && CanLockOn()) AudioManager.instance.PlaySE(foundPlayerSE);
+        isLockOn = CanLockOn();
         MoveToPlayer();
         StartRandomMove();
         JudgeReached();
@@ -55,7 +59,7 @@ public class EnemyBase : MonoBehaviour
     public void MoveToPlayer()
     {
         if (!canMove) return;
-        if (!IsLockOn()) return;
+        if (!isLockOn) return;
         if (iEnemyAttack.IsAttack()) return;
         ResetRandomMoveFlags();
         animator.speed = 1;
@@ -68,7 +72,7 @@ public class EnemyBase : MonoBehaviour
     public void Attack()
     {
         if (!canMove) return;
-        if (!IsLockOn()) return;
+        if (!isLockOn) return;
         if (!iEnemyAttack.InAttackArea()) return;
         if (attackTimer < attackInterval) return;
         navMeshAgent.speed = 0;
@@ -78,7 +82,7 @@ public class EnemyBase : MonoBehaviour
     public void LookAtPlayer()
     {
         if (!canMove) return;
-        if (!IsLockOn()) return;
+        if (!isLockOn) return;
         if (!iEnemyAttack.InAttackArea()) return;
         navMeshAgent.speed = 0;
         var playerPos = PlayerMover.GetPosition();
@@ -95,7 +99,7 @@ public class EnemyBase : MonoBehaviour
     }
     private void SetRandomPosition()
     {
-        if (IsLockOn()) return;
+        if (isLockOn) return;
         var MIN = -MaxRandomMoveDistance;
         var MAX = MaxRandomMoveDistance;
         var xPos = centralPos.x + Random.Range(MIN, MAX);
@@ -106,7 +110,7 @@ public class EnemyBase : MonoBehaviour
     public void StartRandomMove()
     {
         if (!canMove) return;
-        if (IsLockOn()) return;
+        if (isLockOn) return;
         if (isRandomMove) return;
         if (isRandomMoveWait) return;
         isRandomMove = true;
@@ -137,7 +141,7 @@ public class EnemyBase : MonoBehaviour
         isRandomMove = false;
         isRandomMoveWait = false;
     }
-    private bool IsLockOn()
+    private bool CanLockOn()
     {
         if (GetPlayerDistance() >= LockOffDistance)
         {

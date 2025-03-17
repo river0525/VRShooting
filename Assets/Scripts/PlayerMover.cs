@@ -31,6 +31,10 @@ public class PlayerMover : MonoBehaviour
 
     private static Transform playerTransform;
     public static bool canMove = true;
+    private void Awake()
+    {
+        playerTransform = transform;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -38,7 +42,6 @@ public class PlayerMover : MonoBehaviour
         playerStatus = GetComponent<PlayerStatus>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        playerTransform = transform;
         canMove = true;
     }
 
@@ -110,5 +113,12 @@ public class PlayerMover : MonoBehaviour
     public static Vector3 GetPosition()
     {
         return playerTransform.position;
+    }
+    public IEnumerator SetPosition(Vector3 pos)
+    {
+        canMove = false;
+        playerTransform.position = pos;
+        yield return new WaitForSeconds(0.1f);
+        canMove = true;
     }
 }
