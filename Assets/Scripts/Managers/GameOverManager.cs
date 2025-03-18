@@ -11,8 +11,8 @@ public class GameOverManager : MonoBehaviour
     private static AudioClip gameOverSE;
     private static AudioClip retrySE;
     private static GameObject gameOverText;
+    private static bool isGameOver = false;
     private SceneLoader sceneLoader;
-    private bool isGameOver = false;
     private PlayerStatus playerStatus;
     // Start is called before the first frame update
     void Start()
@@ -21,6 +21,7 @@ public class GameOverManager : MonoBehaviour
         retrySE = inputRetrySE;
         gameOverText = inputGameOverText;
         gameOverText.SetActive(false);
+        isGameOver = false;
         var playerObj = GameObject.FindWithTag("Player");
         playerStatus = playerObj.GetComponent<PlayerStatus>();
         var sceneLoaderObj = GameObject.FindWithTag("SceneLoader");
@@ -30,16 +31,14 @@ public class GameOverManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerStatus.GetHP() == 0 && !isGameOver)
-        {
-            isGameOver = true;
-            GameOver();
-        }
+        if (playerStatus.GetHP() == 0) GameOver();
     }
 
 
     public static void GameOver()
     {
+        if (isGameOver) return;
+        isGameOver = true;
         Entrance.canEnter = false;
         PlayerMover.canMove = false;
         gameOverText.SetActive(true);

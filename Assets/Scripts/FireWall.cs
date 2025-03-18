@@ -6,7 +6,7 @@ public class FireWall : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        if(FlagManager.CheckFlag(FlagManager.FlagName.digested)) Destroy(gameObject);
     }
 
     private void OnTriggerStay(Collider other)
@@ -18,6 +18,7 @@ public class FireWall : MonoBehaviour
             PlayerStatus.SetPurpose("バケツをさがせ！");
             return;
         }
+        FlagManager.EnableFlag(FlagManager.FlagName.digested);
         AudioManager.instance.PlaySE(evaporationSE);
         PlayerStatus.SetPurpose("先に進もう！");
         Destroy(gameObject);

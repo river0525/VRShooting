@@ -43,6 +43,7 @@ public class Menu : MonoBehaviour
         menuOpened = true;
         menuObj.SetActive(true);
         PlayerMover.canMove = false;
+        Timer.StopTimer();
         enemys = GameObject.FindGameObjectsWithTag("Enemy");
         foreach(GameObject enemy in enemys)
         {
@@ -60,6 +61,7 @@ public class Menu : MonoBehaviour
         menuOpened = false;
         menuObj.SetActive(false);
         PlayerMover.canMove = true;
+        Timer.StartTimer();
         enemys = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject enemy in enemys)
         {

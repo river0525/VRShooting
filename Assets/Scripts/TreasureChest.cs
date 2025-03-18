@@ -4,6 +4,7 @@ public class TreasureChest : MonoBehaviour
 {
     [SerializeField] GameObject gameClearText;
     [SerializeField] GameObject exclamationMark;
+    [SerializeField] GameObject BGM;
     [SerializeField] AudioClip clearSE;
 
     private bool isOpened = false;
@@ -13,6 +14,7 @@ public class TreasureChest : MonoBehaviour
         anim = GetComponent<Animator>();
         gameClearText.SetActive(false);
         exclamationMark.SetActive(true);
+        BGM.SetActive(true);
     }
     private void OnTriggerStay(Collider other)
     {
@@ -24,5 +26,7 @@ public class TreasureChest : MonoBehaviour
         anim.SetBool("isOpened", true);
         gameClearText.SetActive(true);
         exclamationMark.SetActive(false);
+        BGM.SetActive(false);
+        Timer.StopTimer();
     }
 }
