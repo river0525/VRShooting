@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class Entrance : MonoBehaviour
 {
     [SerializeField] AudioClip DoorSE;
+    [SerializeField] AudioClip cannotOpenSE;
     public static bool canEnter = true;
     private string changeSceneName = "BossRoom";
     private SceneLoader sceneLoader;
@@ -25,6 +26,7 @@ public class Entrance : MonoBehaviour
         if (!FlagManager.CheckFlag(FlagManager.FlagName.getKey))
         {
             PlayerStatus.SetPurpose("ÉJÉMÇéËÇ…ì¸ÇÍÇÎÅI");
+            AudioManager.instance.PlaySE(cannotOpenSE);
             return;
         }
         PlayerMover.canMove = false;

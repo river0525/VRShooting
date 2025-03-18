@@ -3,8 +3,10 @@ using UnityEngine;
 public class MakeBarrier : MonoBehaviour
 {
     [SerializeField] GameObject barrier;
-    [SerializeField] GameObject crystal;
     [SerializeField] OVRScreenFade fade;
+    [SerializeField] Crystal crystal;
+    [SerializeField] AudioClip barrierSE;
+    [SerializeField] AudioSource audio;
 
     private bool isProtected = false;
     private Vector3 startPlayerPos;
@@ -18,7 +20,6 @@ public class MakeBarrier : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         playerMover = player.GetComponent<PlayerMover>();
         barrier.SetActive(false);
-        crystal.SetActive(false);
         startPlayerPos = PlayerMover.GetPosition();
     }
 
@@ -29,9 +30,10 @@ public class MakeBarrier : MonoBehaviour
         if (isProtected) return;
         isProtected = true;
         PlayerStatus.SetPurpose("クリスタルを攻撃し\nバリアをこわせ！");
+        crystal.MakeBarrier();
         fade.FadeIn();
         playerMover.StartCoroutine("SetPosition", startPlayerPos);
         barrier.SetActive(true);
-        crystal.SetActive(true);
+        audio.PlayOneShot(barrierSE);
     }
 }

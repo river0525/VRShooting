@@ -7,7 +7,8 @@ public static class FlagManager
     public enum FlagName
     {
         getBucket,
-        getKey
+        getKey,
+        digested
     }
 
     public static void EnableFlag(FlagName flagname)
