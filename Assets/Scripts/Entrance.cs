@@ -32,7 +32,7 @@ public class Entrance : MonoBehaviour
         PlayerMover.canMove = false;
         canEnter = false;
         AudioManager.instance.PlaySE(DoorSE);
-        PlayerStatus.SetPurpose("ボスをたおせ！");
+        PlayerStatus.SetPurpose("ボスの頭を狙え！");
         sceneLoader.LoadScene(changeSceneName);
     }
     
