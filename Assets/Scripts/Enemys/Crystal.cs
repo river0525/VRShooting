@@ -55,7 +55,7 @@ public class Crystal : MonoBehaviour
         nomalTower.SetActive(false);
         light.SetActive(false);
         brokenTower.SetActive(true);
-        PlayerStatus.SetPurpose("ボスをたおせ！");
+        PlayerStatus.SetPurpose("ボスの頭を狙え！");
         audio.PlayOneShot(breakSE);
         Destroy(barrier);
     }
