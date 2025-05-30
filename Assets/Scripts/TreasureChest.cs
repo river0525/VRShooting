@@ -5,9 +5,10 @@ public class TreasureChest : MonoBehaviour
     [SerializeField] GameObject gameClearText;
     [SerializeField] GameObject exclamationMark;
     [SerializeField] GameObject BGM;
-    [SerializeField] AudioClip clearSE;
 
-    private bool isOpened = false;
+    const int clearSE = 21;
+    const string getTreasureFlag = "•ó‚ðŽè‚É“ü‚ê‚½";
+
     private Animator anim;
     private void Start()
     {
@@ -20,13 +21,12 @@ public class TreasureChest : MonoBehaviour
     {
         if (other.gameObject.tag != "Player") return;
         if (!OVRInput.GetDown(OVRInput.Button.One, OVRInput.Controller.RTouch)) return;
-        if (isOpened) return;
-        isOpened = true;
+        if (FlagDataBase.Instance.GetFlag(getTreasureFlag)) return;
+        FlagDataBase.Instance.SetFlag(getTreasureFlag, true);
         AudioManager.instance.PlaySE(clearSE);
         anim.SetBool("isOpened", true);
         gameClearText.SetActive(true);
         exclamationMark.SetActive(false);
         BGM.SetActive(false);
-        Timer.StopTimer();
     }
 }

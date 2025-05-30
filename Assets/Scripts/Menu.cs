@@ -8,13 +8,14 @@ using UnityEngine.SceneManagement;
 public class Menu : MonoBehaviour
 {
     [SerializeField] GameObject menuObj;
-    [SerializeField] AudioClip openMenuSE;
-    [SerializeField] AudioClip closeMenuSE;
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] Slider BGMSlider;
     [SerializeField] Slider SESlider;
 
-    private string firstSceneName = "Dungeon_5";
+    const int openMenuSE = 11;
+    const int closeMenuSE = 2;
+    const string firstSceneName = "Dungeon_5";
+
     private bool menuOpened = false;
     private GameObject[] enemys;
 
@@ -43,7 +44,7 @@ public class Menu : MonoBehaviour
         menuOpened = true;
         menuObj.SetActive(true);
         PlayerMover.canMove = false;
-        Timer.StopTimer();
+        Timer.Pause();
         enemys = GameObject.FindGameObjectsWithTag("Enemy");
         foreach(GameObject enemy in enemys)
         {
@@ -61,7 +62,7 @@ public class Menu : MonoBehaviour
         menuOpened = false;
         menuObj.SetActive(false);
         PlayerMover.canMove = true;
-        Timer.StartTimer();
+        Timer.Restart();
         enemys = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject enemy in enemys)
         {
@@ -76,7 +77,7 @@ public class Menu : MonoBehaviour
     public void ResetGame()
     {
         PlayerStatus.Reset();
-        FlagManager.ResetFlag();
+        FlagDataBase.Instance.ResetFlag();
         SceneManager.LoadScene(firstSceneName);
     }
 

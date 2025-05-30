@@ -7,6 +7,6 @@ public class DestroyObj : MonoBehaviour
     [SerializeField] GameObject destroyObj;
     public void DestroyObjMethod()
     {
-        Destroy(destroyObj);
+        destroyObj.SetActive(false);
     }
 }

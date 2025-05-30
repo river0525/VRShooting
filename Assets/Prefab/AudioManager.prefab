@@ -25,13 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5564611995857040299}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 25.378471, y: 19.786541, z: 27.227291}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8703889871861246944
 MonoBehaviour:
@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7b00189e3282b54287af221d7a7e104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  seDataBase: {fileID: 11400000, guid: a5bb161b41412c84393d4e4054c6401c, type: 2}
 --- !u!82 &2381390237217609480
 AudioSource:
   m_ObjectHideFlags: 0
@@ -56,6 +57,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -90598835424985805, guid: 8bf78d66c87a52a4db8ba8910586a27c, type: 2}
   m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

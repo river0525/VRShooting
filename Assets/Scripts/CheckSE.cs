@@ -5,9 +5,9 @@ using UnityEngine.EventSystems;
 
 public class CheckSE : MonoBehaviour,IPointerUpHandler
 {
-    [SerializeField] AudioClip checkSE;
+    const int volumeCheckSE = 16;
     public void OnPointerUp(PointerEventData eventData)
     {
-        AudioManager.instance.PlaySE(checkSE);
+        AudioManager.instance.PlaySE(volumeCheckSE);
     }
 }

@@ -6,15 +6,17 @@ public class Crystal : MonoBehaviour
     [SerializeField] private int maxHP = 3;
     [SerializeField] private Slider hpBar;
     [SerializeField] private GameObject barrier;
-    [SerializeField] private GameObject light;
+    [SerializeField] private GameObject _light;
     [SerializeField] private GameObject nomalTower;
     [SerializeField] private GameObject brokenTower;
     [SerializeField] private GameObject canvas;
-    [SerializeField] private AudioClip breakSE;
+
+    const int breakSE = 1;
+    const string breakFlag = "クリスタルを壊した";
 
     private bool canDamage = false;
     private HP hp;
-    private AudioSource audio;
+    private AudioSource _audio;
 
     // Start is called before the first frame update
     void Start()
@@ -23,10 +25,10 @@ public class Crystal : MonoBehaviour
         var nowHP = maxHP;
         hp = new HP(nowHP, maxHP);
         nomalTower.SetActive(true);
-        light.SetActive(false);
+        _light.SetActive(false);
         brokenTower.SetActive(false);
         canvas.SetActive(false);
-        audio = GetComponent<AudioSource>();
+        _audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -45,7 +47,7 @@ public class Crystal : MonoBehaviour
     }
     public void MakeBarrier()
     {
-        light.SetActive(true);
+        _light.SetActive(true);
         canvas.SetActive(true);
         canDamage = true;
     }
@@ -53,10 +55,10 @@ public class Crystal : MonoBehaviour
     public void Break()
     {
         nomalTower.SetActive(false);
-        light.SetActive(false);
+        _light.SetActive(false);
         brokenTower.SetActive(true);
-        PlayerStatus.SetPurpose("ボスの頭を狙え！");
-        audio.PlayOneShot(breakSE);
+        _audio.PlayOneShot(SEDataBase.Instance.GetSE(breakSE));
+        FlagDataBase.Instance.SetFlag(breakFlag,true);
         Destroy(barrier);
     }
 }

@@ -2,25 +2,24 @@ using UnityEngine;
 
 public class FireWall : MonoBehaviour
 {
-    [SerializeField] AudioClip evaporationSE;
+    const int evaporationSE = 7;
+    const string digestedFlag = "火を消した";
+    const string searchedFlag = "火を調べた";
+    const string getBucketFlag = "バケツを手に入れた";
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if(FlagManager.CheckFlag(FlagManager.FlagName.digested)) Destroy(gameObject);
+        if(FlagDataBase.Instance.GetFlag(digestedFlag)) Destroy(gameObject);
     }
 
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag != "Player") return;
         if (!OVRInput.GetDown(OVRInput.Button.One, OVRInput.Controller.RTouch)) return;
-        if (!FlagManager.CheckFlag(FlagManager.FlagName.getBucket))
-        {
-            PlayerStatus.SetPurpose("バケツをさがせ！");
-            return;
-        }
-        FlagManager.EnableFlag(FlagManager.FlagName.digested);
+        FlagDataBase.Instance.SetFlag(searchedFlag, true);
+        if (!FlagDataBase.Instance.GetFlag(getBucketFlag)) return;
+        FlagDataBase.Instance.SetFlag(digestedFlag, true);
         AudioManager.instance.PlaySE(evaporationSE);
-        PlayerStatus.SetPurpose("先に進もう！");
         Destroy(gameObject);
     }
 }

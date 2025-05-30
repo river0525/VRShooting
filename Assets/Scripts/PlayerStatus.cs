@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using System;
 
 public class PlayerStatus : MonoBehaviour
 {
@@ -22,12 +22,11 @@ public class PlayerStatus : MonoBehaviour
         }
     }
     [SerializeField] float playerDamageInterval = 0.5f;
-    [SerializeField] AudioClip playerDamageSE;
-    [SerializeField] TextMeshProUGUI purposeText;
+
+    const int playerDamageSE = 6;
 
     private static HP hp;
     private static float sp = -100f;
-    private static string purpose = "先に進もう！";
     private int lastEnemyID;
     private float timer = 0f;
 
@@ -42,7 +41,6 @@ public class PlayerStatus : MonoBehaviour
     private void Update()
     {
         timer += Time.deltaTime;
-        purposeText.text = purpose;
     }
 
     public void PlayerDamage(int damage, int enemyID)
@@ -83,15 +81,9 @@ public class PlayerStatus : MonoBehaviour
         SP -= amount;
     }
 
-    public static void SetPurpose(string text)
-    {
-        purpose = text;
-    }
-
     public static void Reset()
     {
         hp = null;
         sp = -100f;
-        purpose = "先に進もう！";
     }
 }

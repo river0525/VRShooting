@@ -5,10 +5,11 @@ public class MakeBarrier : MonoBehaviour
     [SerializeField] GameObject barrier;
     [SerializeField] OVRScreenFade fade;
     [SerializeField] Crystal crystal;
-    [SerializeField] AudioClip barrierSE;
-    [SerializeField] AudioSource audio;
+    [SerializeField] AudioSource _audio;
 
-    private bool isProtected = false;
+    const int barrierSE = 15;
+    const string isProtected = "バリア展開済み";
+
     private Vector3 startPlayerPos;
     private EnemyBase enemyBase;
     private GameObject player;
@@ -27,13 +28,12 @@ public class MakeBarrier : MonoBehaviour
     void Update()
     {
         if ((float)enemyBase.hp.Get() / enemyBase.hp.GetMax() > 0.1f) return;
-        if (isProtected) return;
-        isProtected = true;
-        PlayerStatus.SetPurpose("クリスタルを攻撃し\nバリアをこわせ！");
+        if (FlagDataBase.Instance.GetFlag(isProtected)) return;
+        FlagDataBase.Instance.SetFlag(isProtected, true);
         crystal.MakeBarrier();
         fade.FadeIn();
         playerMover.StartCoroutine("SetPosition", startPlayerPos);
         barrier.SetActive(true);
-        audio.PlayOneShot(barrierSE);
+        _audio.PlayOneShot(SEDataBase.Instance.GetSE(barrierSE));
     }
 }
