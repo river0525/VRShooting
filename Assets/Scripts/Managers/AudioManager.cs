@@ -22,8 +22,8 @@ public class AudioManager : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-    public void PlaySE(AudioClip audio)
+    public void PlaySE(int idx)
     {
-        audioSource.PlayOneShot(audio);
+        audioSource.PlayOneShot(SEDataBase.Instance.GetSE(idx));
     }
 }

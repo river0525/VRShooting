@@ -1893,8 +1893,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae31ca08f47c4e949a289c0b318bebc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputGameOverSE: {fileID: 8300000, guid: 959171941ceaf224984c91c8f2bf9c2a, type: 3}
-  inputRetrySE: {fileID: 8300000, guid: 1794a345556f69b4e9f7f10be0e48235, type: 3}
+  inputGameOverSE: 0
+  inputRetrySE: 0
   inputGameOverText: {fileID: 1230973573}
 --- !u!114 &1049810610
 MonoBehaviour:
@@ -1909,8 +1909,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuObj: {fileID: 2143796248}
-  openMenuSE: {fileID: 8300000, guid: 7de824ba824248a4783783ab368a5141, type: 3}
-  closeMenuSE: {fileID: 8300000, guid: b627c92df3ed58f4bb8d1499ff0a7afc, type: 3}
   audioMixer: {fileID: 24100000, guid: 8bf78d66c87a52a4db8ba8910586a27c, type: 2}
   BGMSlider: {fileID: 6571389658977326853}
   SESlider: {fileID: 1475267149415080710}
@@ -2736,7 +2734,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 910df87309abce24b9471b42585fd0de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countdownMinutes: 5
+  countdownMinutes: 10
   safetyColor: {r: 1, g: 1, b: 1, a: 1}
   dangerousColor: {r: 0.82641506, g: 0.10447132, b: 0.10447132, a: 1}
 --- !u!1 &3608653522587728841
@@ -3478,7 +3476,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 581d4c70dba0a114cb0a4b3134fbdda1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkSE: {fileID: 8300000, guid: c457d2b1d02fef2499c9ea64f3fe8830, type: 3}
 --- !u!1 &8030619167037374936
 GameObject:
   m_ObjectHideFlags: 0
@@ -3521,6 +3518,7 @@ GameObject:
   - component: {fileID: 5723420213423404445}
   - component: {fileID: 3359981370027598160}
   - component: {fileID: 3369154100269409045}
+  - component: {fileID: 1570308893874384226}
   m_Layer: 5
   m_Name: Purpose
   m_TagString: Untagged
@@ -3575,7 +3573,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u5148\u306B\u9032\u3082\u3046\uFF01"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9d5fc569aa395544cae5fd6de08778d0, type: 2}
   m_sharedMaterial: {fileID: -2667613014393880876, guid: 9d5fc569aa395544cae5fd6de08778d0, type: 2}
@@ -3646,6 +3644,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1570308893874384226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8898133011088608851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0961ceae98522ac408d7c1534a16c1d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9160887952441478071
 GameObject:
   m_ObjectHideFlags: 0
@@ -3975,16 +3985,11 @@ MonoBehaviour:
   runSpeed: 4
   runSP: 1
   recoverSP: 2
-  maxJumpHeight: 2
   gravity: 6
-  footstepsSE:
-  - {fileID: 8300000, guid: 57a5356be90ecd547ba7116c5e14a521, type: 3}
-  - {fileID: 8300000, guid: 56cd1fb663a8b6a42b92b6068e0d60f1, type: 3}
   laserPointer: {fileID: 9102313410499517168}
   bulletInterval: 0.1
   bullet: {fileID: 1108737806981707520, guid: 185b4420b9c3c644ba9130236f718847, type: 3}
   muzzle: {fileID: 2544959951849017350}
-  shotSE: {fileID: 8300000, guid: c457d2b1d02fef2499c9ea64f3fe8830, type: 3}
   gun: {fileID: 2544959951715181166}
 --- !u!143 &4386730960961695141
 CharacterController:
@@ -4026,8 +4031,6 @@ MonoBehaviour:
   maxHP: 10
   maxSP: 10
   playerDamageInterval: 0.5
-  playerDamageSE: {fileID: 8300000, guid: ea2f417a6b30a3146a93b43a6573eb82, type: 3}
-  purposeText: {fileID: 3369154100269409045}
 --- !u!114 &7988783811961826834
 MonoBehaviour:
   m_ObjectHideFlags: 0

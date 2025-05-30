@@ -16,7 +16,8 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] private float LockOffDistance = 20f;
     [SerializeField] private TrackingArea trackingArea;
     [SerializeField] private Slider hpBar;
-    [SerializeField] private AudioClip foundPlayerSE;
+
+    const int foundPlayerSE = 8;
     
     [HideInInspector] public HP hp;
     private float attackTimer = 0f;
@@ -27,20 +28,24 @@ public class EnemyBase : MonoBehaviour
     private bool isRandomMoveWait = false;
     private bool canMove = true;
     private bool isLockOn = false;
+    private bool setCentral = false;
     private NavMeshAgent navMeshAgent;
     private Vector3 centralPos;
     private IEnemyAttack iEnemyAttack;
     private Animator animator;
-
     // Start is called before the first frame update
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         iEnemyAttack = GetComponent<IEnemyAttack>();
         animator = GetComponentInChildren<Animator>();
+    }
+    private void OnEnable()
+    {
         var nowHP = maxHP;
         hp = new HP(nowHP, maxHP);
-        centralPos = transform.position;
+        if(!setCentral) centralPos = transform.position;
+        else transform.position = centralPos;
     }
 
     // Update is called once per frame

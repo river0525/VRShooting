@@ -23174,7 +23174,7 @@ AnimationClip:
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
-    intParameter: 1
+    intParameter: 4
     messageOptions: 0
   - time: 1.4583334
     functionName: DestroyObjMethod

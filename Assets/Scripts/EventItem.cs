@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class EventItem : MonoBehaviour
 {
-    [SerializeField] private FlagManager.FlagName flagName;
-    [SerializeField] private string nextPurpose;
-    [SerializeField] private AudioClip getItemSE;
+    [SerializeField] private string getFlag;
+
+    const int getItemSE = 9;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if(FlagManager.CheckFlag(flagName)) Destroy(gameObject);
+        if(FlagDataBase.Instance.GetFlag(getFlag)) Destroy(gameObject);
     }
 
     // Update is called once per frame
@@ -22,8 +22,7 @@ public class EventItem : MonoBehaviour
     {
         if (other.gameObject.tag != "Player") return;
         if (!OVRInput.GetDown(OVRInput.Button.One, OVRInput.Controller.RTouch)) return;
-        FlagManager.EnableFlag(flagName);
-        PlayerStatus.SetPurpose(nextPurpose);
+        FlagDataBase.Instance.SetFlag(getFlag, true);
         AudioManager.instance.PlaySE(getItemSE);
         Destroy(gameObject);
     }

@@ -426,7 +426,7 @@ MonoBehaviour:
   LockOffDistance: 20
   trackingArea: {fileID: 7545606823900959254}
   hpBar: {fileID: 361432319308512968}
-  foundPlayerSE: {fileID: 8300000, guid: 9a5a4ca5c1e33d64ebaf0d680c5f0a1d, type: 3}
+  foundPlayerSE: 8
 --- !u!195 &7545606825562666832
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -10,22 +10,22 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] float runSpeed = 2;
     [SerializeField] float runSP = 1f;
     [SerializeField] float recoverSP = 2f;
-    [SerializeField] float maxJumpHeight = 10;
     [SerializeField] float gravity = 1;
-    [SerializeField] AudioClip[] footstepsSE;
     [SerializeField] LineRenderer laserPointer;
+
+    const int footstepsSE = 12;
 
     [Header("e‚ÌÝ’è")]
     [SerializeField] float bulletInterval;
     [SerializeField] GameObject bullet;
     [SerializeField] Transform muzzle;
-    [SerializeField] AudioClip shotSE;
     [SerializeField] GameObject gun;
+
+    const int shotSE = 17;
 
     private float bulletIntervalCount = 0;
     private float footstepsIntervalCount = 0;
     private CharacterController characterController;
-    private RaycastHit hit;
     private Vector3 moveVec;
     private PlayerStatus playerStatus;
 
@@ -104,8 +104,7 @@ public class PlayerMover : MonoBehaviour
     {
         if (characterController.isGrounded && footstepsIntervalCount >= interval && moveVec != Vector3.zero)
         {
-            int randomIndex = Random.Range(0, footstepsSE.Length - 1);
-            AudioManager.instance.PlaySE(footstepsSE[randomIndex]);
+            AudioManager.instance.PlaySE(footstepsSE);
             footstepsIntervalCount = 0f;
         }
     }

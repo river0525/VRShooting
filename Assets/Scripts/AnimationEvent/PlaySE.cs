@@ -2,17 +2,15 @@ using UnityEngine;
 
 public class PlaySE : MonoBehaviour
 {
-    [SerializeField] public AudioClip[] SE;
-
-    private AudioSource audio;
+    private AudioSource _audio;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        audio = GetComponent<AudioSource>();
+        _audio = GetComponent<AudioSource>();
     }
 
     public void Play(int index)
     {
-        audio.PlayOneShot(SE[index]);
+        _audio.PlayOneShot(SEDataBase.Instance.GetSE(index));
     }
 }

@@ -19,7 +19,6 @@ public class ItemDrop : MonoBehaviour
         if (enemyBase.hp.Get() != 0) return;
         if (dropped) return;
         dropped = true;
-        PlayerStatus.SetPurpose("•ó” ‚ðŠJ‚¯‚Ä‚Ý‚æ‚¤");
         dropItem.transform.position = new Vector3(transform.position.x, dropItem.transform.position.y, transform.position.z);
         dropItem.SetActive(true);
     }

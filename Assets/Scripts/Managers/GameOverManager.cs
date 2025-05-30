@@ -5,11 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class GameOverManager : MonoBehaviour
 {
-    [SerializeField] AudioClip inputGameOverSE;
-    [SerializeField] AudioClip inputRetrySE;
+    [SerializeField] int inputGameOverSE;
+    [SerializeField] int inputRetrySE;
     [SerializeField] GameObject inputGameOverText;
-    private static AudioClip gameOverSE;
-    private static AudioClip retrySE;
+    private static int gameOverSE;
+    private static int retrySE;
     private static GameObject gameOverText;
     private static bool isGameOver = false;
     private SceneLoader sceneLoader;
