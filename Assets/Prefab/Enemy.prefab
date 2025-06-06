@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7671099263232354055}
   - component: {fileID: 6429178078363079715}
   - component: {fileID: 3878051953452423137}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 799005749023146026}
   - component: {fileID: 3518918595631404072}
   - component: {fileID: 2887679004707084729}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,7 +201,7 @@ GameObject:
   - component: {fileID: 6656263976863598084}
   - component: {fileID: 7655207295705134327}
   - component: {fileID: 6080087880696851480}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -274,7 +274,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7925587295688060208}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -312,9 +312,9 @@ GameObject:
   - component: {fileID: 7545606823900959252}
   - component: {fileID: 7545606823900959253}
   - component: {fileID: 7545606823900959254}
-  m_Layer: 2
+  m_Layer: 10
   m_Name: TrackingArea
-  m_TagString: CannotTouch
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -380,7 +380,7 @@ GameObject:
   - component: {fileID: 7545606825562666843}
   - component: {fileID: 7545606825562666847}
   - component: {fileID: 7545606825562666832}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -426,7 +426,6 @@ MonoBehaviour:
   LockOffDistance: 20
   trackingArea: {fileID: 7545606823900959254}
   hpBar: {fileID: 361432319308512968}
-  foundPlayerSE: 8
 --- !u!195 &7545606825562666832
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -459,7 +458,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7123031225126616166}
   - component: {fileID: 361432319308512968}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

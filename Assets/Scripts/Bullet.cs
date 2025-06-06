@@ -28,8 +28,6 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        bool canDestroy = true;
-        for (int i = 0; i < ignoreTag.Length; ++i) if (other.gameObject.tag == ignoreTag[i]) canDestroy = false;
-        if (canDestroy) Destroy(gameObject);
+        if (!other.isTrigger) Destroy(gameObject);
     }
 }

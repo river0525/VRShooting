@@ -6,11 +6,11 @@ TagManager:
   tags:
   - PlayerAttack
   - EnemyAttack
-  - CannotTouch
   - Enemy
   - SceneLoader
   - HPSPBar
   - GameOverText
+  - Searchable
   layers:
   - Default
   - TransparentFX
@@ -21,8 +21,8 @@ TagManager:
   - Barrier
   - Ground
   - Wall
-  - 
-  - 
+  - CannotPass
+  - Character
   - 
   - 
   - 

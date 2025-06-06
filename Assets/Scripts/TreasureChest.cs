@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TreasureChest : MonoBehaviour
+public class TreasureChest : SearchableObj
 {
     [SerializeField] GameObject gameClearText;
     [SerializeField] GameObject exclamationMark;
@@ -17,10 +17,8 @@ public class TreasureChest : MonoBehaviour
         exclamationMark.SetActive(true);
         BGM.SetActive(true);
     }
-    private void OnTriggerStay(Collider other)
+    public override void Searched()
     {
-        if (other.gameObject.tag != "Player") return;
-        if (!OVRInput.GetDown(OVRInput.Button.One, OVRInput.Controller.RTouch)) return;
         if (FlagDataBase.Instance.GetFlag(getTreasureFlag)) return;
         FlagDataBase.Instance.SetFlag(getTreasureFlag, true);
         AudioManager.instance.PlaySE(clearSE);

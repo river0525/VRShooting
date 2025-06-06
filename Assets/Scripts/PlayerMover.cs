@@ -25,6 +25,7 @@ public class PlayerMover : MonoBehaviour
 
     private float bulletIntervalCount = 0;
     private float footstepsIntervalCount = 0;
+    private bool isSearching = false;
     private CharacterController characterController;
     private Vector3 moveVec;
 
@@ -57,7 +58,9 @@ public class PlayerMover : MonoBehaviour
         PlayerMove();
         Shot();
         CheckUseItem();
+        isSearching = OVRInput.GetDown(OVRInput.Button.One, OVRInput.Controller.RTouch);
     }
+    
     private void CheckUseItem()
     {
         if (!OVRInput.GetDown(OVRInput.Button.Two, OVRInput.Controller.RTouch)) return;
@@ -117,11 +120,23 @@ public class PlayerMover : MonoBehaviour
     {
         return playerTransform.position;
     }
+    public static Quaternion GetRotarion()
+    {
+        return playerTransform.rotation;
+    }
+    
     public IEnumerator SetPosition(Vector3 pos)
     {
         canMove = false;
         playerTransform.position = pos;
         yield return new WaitForSeconds(0.1f);
         canMove = true;
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag != "Searchable") return;
+        if (!isSearching) return;
+        other.GetComponent<SearchableObj>().Searched();
+        isSearching = false;
     }
 }
