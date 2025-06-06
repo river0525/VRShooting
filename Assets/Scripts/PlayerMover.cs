@@ -27,7 +27,6 @@ public class PlayerMover : MonoBehaviour
     private float footstepsIntervalCount = 0;
     private CharacterController characterController;
     private Vector3 moveVec;
-    private PlayerStatus playerStatus;
 
     private static Transform playerTransform;
     public static bool canMove = true;
@@ -39,7 +38,6 @@ public class PlayerMover : MonoBehaviour
     void Start()
     {
         characterController = GetComponent<CharacterController>();
-        playerStatus = GetComponent<PlayerStatus>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         canMove = true;
@@ -58,6 +56,12 @@ public class PlayerMover : MonoBehaviour
         gun.SetActive(true);
         PlayerMove();
         Shot();
+        CheckUseItem();
+    }
+    private void CheckUseItem()
+    {
+        if (!OVRInput.GetDown(OVRInput.Button.Two, OVRInput.Controller.RTouch)) return;
+        PlayerManager.instance.UseItem();
     }
 
     private void PlayerMove()
@@ -70,16 +74,16 @@ public class PlayerMover : MonoBehaviour
         var vrCamera = GameObject.Find("PlayerSet/OVRCameraRig/TrackingSpace/CenterEyeAnchor").transform;
         var horizontalRotation = Quaternion.AngleAxis(vrCamera.eulerAngles.y, Vector3.up);
         moveVec = (horizontalRotation * new Vector3(input.x, 0, input.y)).normalized;
-        if (OVRInput.Get(OVRInput.Button.PrimaryThumbstick, OVRInput.Controller.RTouch) && playerStatus.GetSP() > 0 && moveVec != Vector3.zero)
+        if (OVRInput.Get(OVRInput.Button.PrimaryThumbstick, OVRInput.Controller.RTouch) && PlayerManager.instance.GetSP() > 0 && moveVec != Vector3.zero)
         {
             moveVec *= runSpeed;
-            playerStatus.SubtractSP(runSP * Time.deltaTime);
+            PlayerManager.instance.SubtractSP(runSP * Time.deltaTime);
             PlayFootstepsSE(0.3f);
         }
         else
         {
             moveVec *= walkSpeed;
-            playerStatus.AddSP(recoverSP * Time.deltaTime);
+            PlayerManager.instance.AddSP(recoverSP * Time.deltaTime);
             PlayFootstepsSE(0.5f);
         }
         var y = Vector3.up * -gravity;

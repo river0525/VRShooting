@@ -76,7 +76,7 @@ public class Menu : MonoBehaviour
 
     public void ResetGame()
     {
-        PlayerStatus.Reset();
+        PlayerManager.instance.Initialize();
         FlagDataBase.Instance.ResetFlag();
         SceneManager.LoadScene(firstSceneName);
     }
