@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Potion
   m_EditorClassIdentifier: 
   <Icon>k__BackingField: {fileID: 21300000, guid: 316f8061a26881744b1c62484ff2c720, type: 3}
+  <Prefab>k__BackingField: {fileID: 7204687955752416449, guid: ca33eba8871593745a7359e22af503bb, type: 3}
   recoverHP: 2

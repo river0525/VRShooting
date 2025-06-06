@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Entrance : MonoBehaviour
+public class Entrance : SearchableObj
 {
     public static bool canEnter = true;
     private string changeSceneName = "BossRoom";
@@ -21,11 +21,8 @@ public class Entrance : MonoBehaviour
         var sceneLoaderObj = GameObject.FindWithTag("SceneLoader");
         sceneLoader = sceneLoaderObj.GetComponent<SceneLoader>();
     }
-    // Start is called before the first frame update
-    private void OnTriggerStay(Collider other)
+    public override void Searched()
     {
-        if (other.gameObject.tag != "Player") return;
-        if (!OVRInput.GetDown(OVRInput.Button.One, OVRInput.Controller.RTouch)) return;
         FlagDataBase.Instance.SetFlag(searchedFlag, true);
         if (!canEnter) return;
         if (!FlagDataBase.Instance.GetFlag(getKeyFlag))

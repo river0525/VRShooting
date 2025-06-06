@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyChallenge : MonoBehaviour
+public class EnemyChallenge : SearchableObj
 {
     [SerializeField] private GameObject[] enemys;
     [SerializeField] private GameObject[] destroyObj;
@@ -43,10 +43,8 @@ public class EnemyChallenge : MonoBehaviour
         FlagDataBase.Instance.SetFlag(challengeFlag, false);
         foreach (var obj in destroyObj) Destroy(obj);
     }
-    private void OnTriggerStay(Collider other)
+    public override void Searched()
     {
-        if (other.gameObject.tag != "Player") return;
-        if (!OVRInput.GetDown(OVRInput.Button.One, OVRInput.Controller.RTouch)) return;
         if (FlagDataBase.Instance.GetFlag(challengeFlag)) return;
         if (isSearched) return;
         Timer.SetCounter(time);

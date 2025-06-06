@@ -73,8 +73,17 @@ public class PlayerManager : MonoBehaviour
     }
     public void SetItem(int itemID)
     {
+        if (heldItem != itemNullNum) ThrowAwayItem();
         heldItem = itemID;
         hpSPBar.UpdateIcon();
+    }
+
+    private void ThrowAwayItem()
+    {
+        if (heldItem == itemNullNum) return;
+        var prefab = ItemDataBase.Instance.GetPrefab(heldItem);
+        Instantiate(prefab, PlayerMover.GetPosition(), PlayerMover.GetRotarion());
+        heldItem = itemNullNum;
     }
     public int GetItem()
     {

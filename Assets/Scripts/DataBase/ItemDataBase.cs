@@ -23,4 +23,8 @@ public class ItemDataBase : ScriptableObject
     {
         return itemData[idx].Icon;
     }
+    public GameObject GetPrefab(int idx)
+    {
+        return itemData[idx].Prefab;
+    }
 }

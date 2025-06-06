@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EventItem : MonoBehaviour
+public class EventItem : SearchableObj
 {
     [SerializeField] private string getFlag;
 
@@ -18,10 +18,8 @@ public class EventItem : MonoBehaviour
         
     }
 
-    private void OnTriggerStay(Collider other)
+    public override void Searched()
     {
-        if (other.gameObject.tag != "Player") return;
-        if (!OVRInput.GetDown(OVRInput.Button.One, OVRInput.Controller.RTouch)) return;
         FlagDataBase.Instance.SetFlag(getFlag, true);
         AudioManager.instance.PlaySE(getItemSE);
         Destroy(gameObject);

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FireWall : MonoBehaviour
+public class FireWall : SearchableObj
 {
     const int evaporationSE = 7;
     const string digestedFlag = "âŒÇè¡ÇµÇΩ";
@@ -11,11 +11,8 @@ public class FireWall : MonoBehaviour
     {
         if(FlagDataBase.Instance.GetFlag(digestedFlag)) Destroy(gameObject);
     }
-
-    private void OnTriggerStay(Collider other)
+    public override void Searched()
     {
-        if (other.gameObject.tag != "Player") return;
-        if (!OVRInput.GetDown(OVRInput.Button.One, OVRInput.Controller.RTouch)) return;
         FlagDataBase.Instance.SetFlag(searchedFlag, true);
         if (!FlagDataBase.Instance.GetFlag(getBucketFlag)) return;
         FlagDataBase.Instance.SetFlag(digestedFlag, true);
