@@ -7,19 +7,28 @@ public class HPSPbar : MonoBehaviour
 {
     [SerializeField] Image hpBar;
     [SerializeField] Image spBar;
+    [SerializeField] Image icon;
+    [SerializeField] Sprite nullIcon;
 
-    private PlayerStatus playerStatus;
-    // Start is called before the first frame update
-    void Start()
+    public void UpdateAll()
     {
-        var playerObj = GameObject.FindWithTag("Player");
-        playerStatus = playerObj.GetComponent<PlayerStatus>();
+        UpdateHP();
+        UpdateSP();
+        UpdateIcon();
+    }
+    public void UpdateHP()
+    {
+        hpBar.fillAmount = PlayerManager.instance.GetHP() / (float)PlayerManager.instance.GetMaxHP();
+    }
+    public void UpdateSP()
+    {
+        spBar.fillAmount = PlayerManager.instance.GetSP() / (float)PlayerManager.instance.GetMaxSP();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateIcon()
     {
-        hpBar.fillAmount = playerStatus.GetHP() / (float)playerStatus.GetMaxHP();
-        spBar.fillAmount = playerStatus.GetSP() / playerStatus.GetMaxSP();
+        var itemID = PlayerManager.instance.GetItem();
+        if (itemID == PlayerManager.itemNullNum) icon.sprite = nullIcon;
+        else icon.sprite = ItemDataBase.Instance.GetIcon(itemID);
     }
 }
