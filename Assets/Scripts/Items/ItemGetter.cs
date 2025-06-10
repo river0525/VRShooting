@@ -1,15 +1,14 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ItemGetter : SearchableObj
+public class ItemGetter : MonoBehaviour, ISearchableObj
 {
     [SerializeField] int itemID;
 
-    const int getItemSE = 9;
-    public override void Searched()
+    BaseItemGetter baseItemGetter = new();
+
+    public void Searched()
     {
-        AudioManager.instance.PlaySE(getItemSE);
-        PlayerManager.instance.SetItem(itemID);
-        Destroy(gameObject);
+        baseItemGetter.Searched(itemID, gameObject);
     }
 }

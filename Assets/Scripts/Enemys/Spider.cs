@@ -16,12 +16,6 @@ public class Spider : MonoBehaviour,IEnemyAttack
         enemyBase = GetComponent<EnemyBase>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void Attack()
     {
         animator.SetBool(biteAttackFlag, true);

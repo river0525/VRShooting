@@ -1,14 +1,15 @@
 using UnityEngine;
 
-public class EnemyChallenge : SearchableObj
+public class EnemyChallenge : MonoBehaviour, ISearchableObj
 {
     [SerializeField] private GameObject[] enemys;
     [SerializeField] private GameObject[] destroyObj;
     [SerializeField] private GameObject reward;
     [SerializeField] private float time = 1.5f;
+    [SerializeField] private string gotRewardFlag;
 
-    bool isSearched=false;
-    bool isCleared = false;
+    private bool isSearched =false;
+    private bool isCleared = false;
 
     const int appearSE = 0;
     const int clearSE = 14;
@@ -16,8 +17,13 @@ public class EnemyChallenge : SearchableObj
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        foreach (var enemy in enemys) enemy.SetActive(false);
+        ResetChallenge();
         reward.SetActive(false);
+        if (FlagDataBase.Instance.GetFlag(gotRewardFlag))
+        {
+            isCleared = true;
+            DestroyObjs();
+        }
     }
 
     // Update is called once per frame
@@ -29,24 +35,12 @@ public class EnemyChallenge : SearchableObj
             ResetChallenge();
             return;
         }
-        isCleared = true;
-        foreach (var enemy in enemys)
-        {
-            if (!enemy.activeInHierarchy) continue;
-            isCleared=false;
-            break;
-        }
-        if(!isCleared) return;
-        AudioManager.instance.PlaySE(clearSE);
-        Timer.ResetCounter();
-        reward.SetActive(true);
-        FlagDataBase.Instance.SetFlag(challengeFlag, false);
-        foreach (var obj in destroyObj) Destroy(obj);
+        isCleared = TryClear();
     }
-    public override void Searched()
+    public void Searched()
     {
         if (FlagDataBase.Instance.GetFlag(challengeFlag)) return;
-        if (isSearched) return;
+        if (isSearched || isCleared) return;
         Timer.SetCounter(time);
         FlagDataBase.Instance.SetFlag(challengeFlag, true);
         isSearched = true;
@@ -59,5 +53,22 @@ public class EnemyChallenge : SearchableObj
         isSearched = false;
         FlagDataBase.Instance.SetFlag(challengeFlag, false);
         foreach (var enemy in enemys) enemy.SetActive(false);
+    }
+
+    private bool TryClear()
+    {
+        if (isCleared) return true;
+        foreach (var enemy in enemys) if (enemy.activeInHierarchy) return false;
+        AudioManager.instance.PlaySE(clearSE);
+        Timer.ResetCounter();
+        reward.SetActive(true);
+        FlagDataBase.Instance.SetFlag(challengeFlag, false);
+        DestroyObjs();
+        return true;
+    }
+
+    private void DestroyObjs()
+    {
+        foreach (var obj in destroyObj) Destroy(obj);
     }
 }

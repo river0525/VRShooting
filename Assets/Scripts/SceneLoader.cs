@@ -6,10 +6,6 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour
 {
     [SerializeField] private OVRScreenFade screenFade;
-    private void Start()
-    {
-        
-    }
     public void LoadScene(string changeSceneName)
     {
         screenFade.FadeOut();

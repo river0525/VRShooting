@@ -10,7 +10,6 @@ TagManager:
   - SceneLoader
   - HPSPBar
   - GameOverText
-  - Searchable
   layers:
   - Default
   - TransparentFX

@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5515494527137250392, guid: 48efb75d5313e74438a40c5d6f95547a, type: 3}
       propertyPath: m_Name
-      value: Potion Variant
+      value: Potion
       objectReference: {fileID: 0}
     - target: {fileID: 6005669476585539774, guid: 48efb75d5313e74438a40c5d6f95547a, type: 3}
       propertyPath: m_LocalPosition.x

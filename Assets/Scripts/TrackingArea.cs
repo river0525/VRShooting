@@ -7,17 +7,6 @@ public class TrackingArea : MonoBehaviour
     [SerializeField] float angle = 45f;
 
     [HideInInspector] public bool inThisArea = false;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerStay(Collider other)
     {
