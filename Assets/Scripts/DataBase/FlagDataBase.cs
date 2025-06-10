@@ -37,7 +37,7 @@ public class FlagDataBase : ScriptableObject
 
     public void ResetFlag()
     {
-        foreach (var element in flags) _flags[element.key] = false;
+        foreach (var element in flags) _flags[element.key] = element.value; ;
         ObjectiveManager.instance.UpdateObjective();
     }
 }

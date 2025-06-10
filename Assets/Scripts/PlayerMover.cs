@@ -77,7 +77,7 @@ public class PlayerMover : MonoBehaviour
         var vrCamera = GameObject.Find("PlayerSet/OVRCameraRig/TrackingSpace/CenterEyeAnchor").transform;
         var horizontalRotation = Quaternion.AngleAxis(vrCamera.eulerAngles.y, Vector3.up);
         moveVec = (horizontalRotation * new Vector3(input.x, 0, input.y)).normalized;
-        if (OVRInput.Get(OVRInput.Button.PrimaryThumbstick, OVRInput.Controller.RTouch) && PlayerManager.instance.GetSP() > 0 && moveVec != Vector3.zero)
+        if (OVRInput.Get(OVRInput.Button.PrimaryThumbstick, OVRInput.Controller.LTouch) && PlayerManager.instance.GetSP() > 0 && moveVec != Vector3.zero)
         {
             moveVec *= runSpeed;
             PlayerManager.instance.SubtractSP(runSP * Time.deltaTime);
@@ -134,9 +134,9 @@ public class PlayerMover : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag != "Searchable") return;
         if (!isSearching) return;
-        other.GetComponent<SearchableObj>().Searched();
+        if (!other.TryGetComponent<ISearchableObj>(out var comp)) return;
+        comp.Searched();
         isSearching = false;
     }
 }

@@ -19,8 +19,8 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-    [SerializeField] int gameOverSE;
-    [SerializeField] int retrySE;
+    private const int gameOverSE = 18;
+    private const int retrySE = 19;
     private GameObject gameOverText;
     private bool isGameOver = false;
     private SceneLoader sceneLoader;
@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     public void Retry()
     {
         if (!isGameOver) return;
-        PlayerManager.instance.FullRecover();
+        PlayerManager.instance.Retry();
         AudioManager.instance.PlaySE(retrySE);
         sceneLoader.LoadScene(SceneManager.GetActiveScene().name);
     }

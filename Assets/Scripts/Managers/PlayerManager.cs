@@ -83,6 +83,7 @@ public class PlayerManager : MonoBehaviour
         if (heldItem == itemNullNum) return;
         var prefab = ItemDataBase.Instance.GetPrefab(heldItem);
         Instantiate(prefab, PlayerMover.GetPosition(), PlayerMover.GetRotarion());
+        ItemDataBase.Instance.OnThrowAway(heldItem);
         heldItem = itemNullNum;
     }
     public int GetItem()
@@ -92,6 +93,11 @@ public class PlayerManager : MonoBehaviour
     public void UseItem()
     {
         if (heldItem == itemNullNum || !ItemDataBase.Instance.Use(heldItem)) return;
+        LostItem();
+    }
+
+    public void LostItem()
+    {
         heldItem = itemNullNum;
         hpSPBar.UpdateIcon();
     }
@@ -137,6 +143,12 @@ public class PlayerManager : MonoBehaviour
         var nowHP = maxHP;
         hp = new HP(nowHP, maxHP);
         SP = maxSP;
+        heldItem = itemNullNum;
+    }
+
+    public void Retry()
+    {
+        hp.FullRecover();
         heldItem = itemNullNum;
     }
 }

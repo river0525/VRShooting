@@ -17,6 +17,7 @@ public class Timer : MonoBehaviour
     {
         text = GetComponent<TextMeshProUGUI>();
         isStopped = false;
+        ResetCounter();
     }
 
     // Update is called once per frame

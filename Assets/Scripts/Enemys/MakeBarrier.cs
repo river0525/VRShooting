@@ -8,8 +8,9 @@ public class MakeBarrier : MonoBehaviour
     [SerializeField] AudioSource _audio;
 
     const int barrierSE = 15;
-    const string isProtected = "バリア展開済み";
+    const string isProtectedFlag = "バリア展開済み";
 
+    private bool isProtected = false;
     private Vector3 startPlayerPos;
     private EnemyBase enemyBase;
     private GameObject player;
@@ -28,8 +29,9 @@ public class MakeBarrier : MonoBehaviour
     void Update()
     {
         if ((float)enemyBase.hp.Get() / enemyBase.hp.GetMax() > 0.1f) return;
-        if (FlagDataBase.Instance.GetFlag(isProtected)) return;
-        FlagDataBase.Instance.SetFlag(isProtected, true);
+        if (isProtected) return;
+        isProtected = true;
+        FlagDataBase.Instance.SetFlag(isProtectedFlag, true);
         crystal.MakeBarrier();
         fade.FadeIn();
         playerMover.StartCoroutine("SetPosition", startPlayerPos);

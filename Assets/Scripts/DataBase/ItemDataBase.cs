@@ -27,4 +27,8 @@ public class ItemDataBase : ScriptableObject
     {
         return itemData[idx].Prefab;
     }
+    public void OnThrowAway(int idx)
+    {
+        if (itemData[idx] is IRemoveItem item) item.OnRemove();
+    }
 }

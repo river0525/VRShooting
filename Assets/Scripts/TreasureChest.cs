@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TreasureChest : SearchableObj
+public class TreasureChest : MonoBehaviour, ISearchableObj
 {
     [SerializeField] GameObject gameClearText;
     [SerializeField] GameObject exclamationMark;
@@ -17,7 +17,7 @@ public class TreasureChest : SearchableObj
         exclamationMark.SetActive(true);
         BGM.SetActive(true);
     }
-    public override void Searched()
+    public void Searched()
     {
         if (FlagDataBase.Instance.GetFlag(getTreasureFlag)) return;
         FlagDataBase.Instance.SetFlag(getTreasureFlag, true);

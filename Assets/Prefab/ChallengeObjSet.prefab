@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3757504577948474328}
   m_Layer: 0
   m_Name: ChallengeObjSet
-  m_TagString: Searchable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 4221836227339103461}
   m_Layer: 0
   m_Name: Reward
-  m_TagString: Searchable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 6236525331395894445}
   m_Layer: 0
   m_Name: ChallengeObj
-  m_TagString: Searchable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
