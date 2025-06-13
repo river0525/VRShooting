@@ -14,6 +14,8 @@ public class EnemyChallenge : MonoBehaviour, ISearchableObj
     const int appearSE = 0;
     const int clearSE = 14;
     const string challengeFlag = "敵討伐挑戦中";
+    private const string shotTutorial = "Shot";
+    private const string shotTutorialExplataion = "右トリガー：撃つ";
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -42,6 +44,7 @@ public class EnemyChallenge : MonoBehaviour, ISearchableObj
         if (FlagDataBase.Instance.GetFlag(challengeFlag)) return;
         if (isSearched || isCleared) return;
         Timer.SetCounter(time);
+        TutorialManager.instance.DoTutorial(shotTutorial, shotTutorialExplataion);
         FlagDataBase.Instance.SetFlag(challengeFlag, true);
         isSearched = true;
         AudioManager.instance.PlaySE(appearSE);

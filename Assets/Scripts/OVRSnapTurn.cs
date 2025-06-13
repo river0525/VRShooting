@@ -3,13 +3,14 @@ using UnityEngine;
 public class OVRSnapTurn : MonoBehaviour
 {
     public float turnSpeed = 45f; // 回転速度（°/秒）
-    private Transform trackingSpace; // OVRCameraRig の TrackingSpace
     private bool stickDown = false;
+
+    private const string cameraTutorial = "Camera";
+    private const string cameraTutorialExplanation = "左スティック：カメラ";
 
     void Start()
     {
-        // OVRCameraRig の TrackingSpace を取得
-        trackingSpace = GameObject.Find("OVRCameraRig/TrackingSpace").transform;
+        TutorialManager.instance.DoTutorial(cameraTutorial, cameraTutorialExplanation);
     }
 
     void Update()
@@ -24,8 +25,9 @@ public class OVRSnapTurn : MonoBehaviour
             if (stickDown) return;
             if (turnInput < 0) turnInput = -1;
             if (turnInput > 0) turnInput = 1;
-            trackingSpace.Rotate(Vector3.up, turnInput * turnSpeed);
+            transform.Rotate(Vector3.up, turnInput * turnSpeed);
             stickDown = true;
+            TutorialManager.instance.DoneTutorial(cameraTutorial);
             return;
         }
         stickDown = false;

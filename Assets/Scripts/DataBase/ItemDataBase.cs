@@ -15,9 +15,14 @@ public class ItemDataBase : ScriptableObject
 
     [SerializeField, NonReorderable] private ItemData[] itemData;
 
-    public bool Use(int idx)
+    public bool TryUse(int idx)
     {
-        return itemData[idx].Use();
+        if (!CanUse(idx)) return false;
+        return (itemData[idx] as IUsableItem).TryUse();
+    }
+    public bool CanUse(int idx)
+    {
+        return itemData[idx] is IUsableItem;
     }
     public Sprite GetIcon(int idx)
     {
