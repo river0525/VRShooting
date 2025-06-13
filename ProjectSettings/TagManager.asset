@@ -10,6 +10,7 @@ TagManager:
   - SceneLoader
   - HPSPBar
   - GameOverText
+  - TutorialController
   layers:
   - Default
   - TransparentFX

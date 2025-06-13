@@ -15,6 +15,8 @@ public class Menu : MonoBehaviour
     const int openMenuSE = 11;
     const int closeMenuSE = 2;
     const string firstSceneName = "Dungeon_5";
+    private const string menuTutorial = "Menu";
+    private const string menuTutorialExplanation = "メニューボタン：メニュー";
 
     private bool menuOpened = false;
     private GameObject[] enemys;
@@ -28,6 +30,7 @@ public class Menu : MonoBehaviour
         //SE
         audioMixer.GetFloat("SE", out float seVolume);
         SESlider.value = seVolume;
+        TutorialManager.instance.DoTutorial(menuTutorial, menuTutorialExplanation);
     }
 
     private void Update()
@@ -41,6 +44,7 @@ public class Menu : MonoBehaviour
     void OpenMenu()
     {
         if (menuOpened) return;
+        TutorialManager.instance.DoneTutorial(menuTutorial);
         menuOpened = true;
         menuObj.SetActive(true);
         PlayerMover.canMove = false;
@@ -77,6 +81,7 @@ public class Menu : MonoBehaviour
     public void ResetGame()
     {
         PlayerManager.instance.Initialize();
+        TutorialManager.instance.Initialize();
         FlagDataBase.Instance.ResetFlag();
         SceneManager.LoadScene(firstSceneName);
     }

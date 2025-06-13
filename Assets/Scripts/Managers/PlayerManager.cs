@@ -28,6 +28,8 @@ public class PlayerManager : MonoBehaviour
 
     public const int itemNullNum = -1;
     const int playerDamageSE = 6;
+    private const string useItemTutorial = "UseItem";
+    private const string useItemTutorialExplanation = "Bボタン：アイテム";
 
     private HP hp;
     private float sp;
@@ -74,6 +76,7 @@ public class PlayerManager : MonoBehaviour
     public void SetItem(int itemID)
     {
         if (heldItem != itemNullNum) ThrowAwayItem();
+        if(ItemDataBase.Instance.CanUse(itemID)) TutorialManager.instance.DoTutorial(useItemTutorial, useItemTutorialExplanation);
         heldItem = itemID;
         hpSPBar.UpdateIcon();
     }
@@ -92,7 +95,8 @@ public class PlayerManager : MonoBehaviour
     }
     public void UseItem()
     {
-        if (heldItem == itemNullNum || !ItemDataBase.Instance.Use(heldItem)) return;
+        if (heldItem == itemNullNum || !ItemDataBase.Instance.TryUse(heldItem)) return;
+        TutorialManager.instance.DoneTutorial(useItemTutorial);
         LostItem();
     }
 

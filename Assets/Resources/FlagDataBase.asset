@@ -37,3 +37,15 @@ MonoBehaviour:
     value: 0
   - key: "\u30AF\u30EA\u30B9\u30BF\u30EB\u3092\u58CA\u3057\u305F"
     value: 0
+  - key: "\u65E2\u306B\u6483\u3063\u305F"
+    value: 0
+  - key: "\u65E2\u306B\u30E1\u30CB\u30E5\u30FC\u3092\u958B\u3044\u305F"
+    value: 0
+  - key: "\u65E2\u306B\u8ABF\u3079\u305F"
+    value: 0
+  - key: "\u65E2\u306B\u30A2\u30A4\u30C6\u30E0\u3092\u4F7F\u3063\u305F"
+    value: 0
+  - key: "\u65E2\u306B\u6B69\u3044\u305F"
+    value: 0
+  - key: "\u65E2\u306B\u8D70\u3063\u305F"
+    value: 0

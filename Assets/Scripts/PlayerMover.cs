@@ -21,7 +21,14 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] Transform muzzle;
     [SerializeField] GameObject gun;
 
-    const int shotSE = 17;
+    private const int shotSE = 17;
+    private const string walkTutorial = "Walk";
+    private const string runTutorial = "Run";
+    private const string shotTutorial = "Shot";
+    private const string searchTutorial = "Search";
+    private const string walkTutorialExplanation = "右スティック：歩く";
+    private const string runTutorialExplanation = "右スティック押し込み：走る";
+    private const string searchTutorialExplanation = "Aボタン：調べる";
 
     private float bulletIntervalCount = 0;
     private float footstepsIntervalCount = 0;
@@ -42,6 +49,8 @@ public class PlayerMover : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         canMove = true;
+        TutorialManager.instance.DoTutorial(walkTutorial, walkTutorialExplanation);
+        TutorialManager.instance.DoTutorial(runTutorial, runTutorialExplanation);
     }
 
     // Update is called once per frame
@@ -82,6 +91,7 @@ public class PlayerMover : MonoBehaviour
             moveVec *= runSpeed;
             PlayerManager.instance.SubtractSP(runSP * Time.deltaTime);
             PlayFootstepsSE(0.3f);
+            TutorialManager.instance.DoneTutorial(runTutorial);
         }
         else
         {
@@ -104,6 +114,7 @@ public class PlayerMover : MonoBehaviour
             Instantiate(bullet, muzzle.position, muzzle.rotation);
             AudioManager.instance.PlaySE(shotSE);
             bulletIntervalCount = 0;
+            TutorialManager.instance.DoneTutorial(shotTutorial);
         }
     }
 
@@ -112,6 +123,7 @@ public class PlayerMover : MonoBehaviour
         if (characterController.isGrounded && footstepsIntervalCount >= interval && moveVec != Vector3.zero)
         {
             AudioManager.instance.PlaySE(footstepsSE);
+            TutorialManager.instance.DoneTutorial(walkTutorial);
             footstepsIntervalCount = 0f;
         }
     }
@@ -134,8 +146,10 @@ public class PlayerMover : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (!isSearching) return;
         if (!other.TryGetComponent<ISearchableObj>(out var comp)) return;
+        TutorialManager.instance.DoTutorial(searchTutorial, searchTutorialExplanation);
+        if (!isSearching) return;
+        TutorialManager.instance.DoneTutorial(searchTutorial);
         comp.Searched();
         isSearching = false;
     }
