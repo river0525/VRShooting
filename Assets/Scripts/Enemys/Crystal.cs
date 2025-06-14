@@ -29,6 +29,7 @@ public class Crystal : MonoBehaviour
         brokenTower.SetActive(false);
         canvas.SetActive(false);
         _audio = GetComponent<AudioSource>();
+        FlagDataBase.Instance.SetFlag(breakFlag, false);
     }
 
     // Update is called once per frame

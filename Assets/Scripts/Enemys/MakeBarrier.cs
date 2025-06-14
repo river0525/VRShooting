@@ -23,6 +23,7 @@ public class MakeBarrier : MonoBehaviour
         playerMover = player.GetComponent<PlayerMover>();
         barrier.SetActive(false);
         startPlayerPos = PlayerMover.GetPosition();
+        FlagDataBase.Instance.SetFlag(isProtectedFlag, false);
     }
 
     // Update is called once per frame

@@ -48,4 +48,8 @@ public class GameManager : MonoBehaviour
         AudioManager.instance.PlaySE(retrySE);
         sceneLoader.LoadScene(SceneManager.GetActiveScene().name);
     }
+    public bool IsGameOver()
+    {
+        return isGameOver;
+    }
 }

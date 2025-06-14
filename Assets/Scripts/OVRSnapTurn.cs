@@ -6,7 +6,7 @@ public class OVRSnapTurn : MonoBehaviour
     private bool stickDown = false;
 
     private const string cameraTutorial = "Camera";
-    private const string cameraTutorialExplanation = "左スティック：カメラ";
+    private const string cameraTutorialExplanation = "右スティック：カメラ";
 
     void Start()
     {
