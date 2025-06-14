@@ -5,12 +5,11 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] float speed = 1;
-    [SerializeField] string[] ignoreTag;
     [SerializeField] float maxMoveDistance = 100;
 
     private Vector3 startPos;
     private Rigidbody rb;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,9 +18,9 @@ public class Bullet : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
-        if (!PlayerMover.canMove) return;
+        if (!PlayerMover.canMove && !GameManager.instance.IsGameOver()) return;
         if (Vector3.Distance(startPos, transform.position) > maxMoveDistance) Destroy(gameObject);
         else rb.MovePosition(transform.position + transform.rotation * Vector3.forward * speed * Time.deltaTime);
     }

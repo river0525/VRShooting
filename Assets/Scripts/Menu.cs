@@ -65,7 +65,7 @@ public class Menu : MonoBehaviour
         if (!menuOpened) return;
         menuOpened = false;
         menuObj.SetActive(false);
-        PlayerMover.canMove = true;
+        if(!GameManager.instance.IsGameOver()) PlayerMover.canMove = true;
         Timer.Restart();
         enemys = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject enemy in enemys)

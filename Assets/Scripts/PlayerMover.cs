@@ -26,8 +26,8 @@ public class PlayerMover : MonoBehaviour
     private const string runTutorial = "Run";
     private const string shotTutorial = "Shot";
     private const string searchTutorial = "Search";
-    private const string walkTutorialExplanation = "右スティック：歩く";
-    private const string runTutorialExplanation = "右スティック押し込み：走る";
+    private const string walkTutorialExplanation = "左スティック：歩く";
+    private const string runTutorialExplanation = "左スティック押し込み：走る";
     private const string searchTutorialExplanation = "Aボタン：調べる";
 
     private float bulletIntervalCount = 0;
